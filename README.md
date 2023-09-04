@@ -3,6 +3,6 @@ Aplikasi untuk memfasilitasi keinginan pengguna yang ingin bersedekah makanan la
 
 # Kelompok 7 - besok aja ya
 1.
-2.
+2. Khairun Nisa' Zuqri (21/473354/TK/52162) | Front-End Developer
 3.
 
