@@ -1,11 +1,11 @@
 # Berkati.id
 
 ### Kelompok 7 - besok aja ya
-- Fio Mel Nathany
-- Khairun Nisa Zuqri
-- Petrus Aria Chevalier Rambing
+- Fio Mel Nathany - Backend Developer
+- Khairun Nisa Zuqri - Frontend Developer
+- Petrus Aria Chevalier Rambing - Software Architect
 
-## Project Senior Project TI
+## Project Junior Project TI
 ## Departemen Teknik Elektro dan Teknologi Informasi, Fakultas Teknik, Universitas Gadjah Mada
 
 ### Permasalahan yang dipecahkan
