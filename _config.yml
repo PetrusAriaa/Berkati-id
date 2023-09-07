@@ -1,0 +1,4 @@
+theme: minima
+title: "Berkati.id"
+description: "Aplikasi untuk memfasilitasi keinginan pengguna yang ingin bersedekah makanan layak untuk orang yang kekurangan"
+exclude: ["README.md"]
