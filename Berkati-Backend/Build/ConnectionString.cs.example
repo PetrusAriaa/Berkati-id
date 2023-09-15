@@ -1,0 +1,17 @@
+﻿namespace Berkati_Backend.Build
+{
+    public class ConnectionString
+    {
+        public string conn()
+        {
+            const string HOSTNAME = "***";
+            const string PORT = "***";
+            const string DATABASE = "***";
+            const string USERNAME = "***";
+            const string PASSWORD = "***";
+
+            return $"Host={HOSTNAME};Port={PORT};Database={DATABASE};Username={USERNAME};Password={PASSWORD};";
+        }
+
+    }
+}

@@ -1,3 +1,5 @@
+using Berkati_Backend.Models;
+using Berkati_Backend.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,23 +10,23 @@ namespace Berkati_Backend.Controllers
     [Route("[controller]")]
     public class BerkatiController : ControllerBase
     {
-    //    private static readonly string[] Summaries = new[]
-    //    {
-    //    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    //};
+        private readonly BerkatiRepository berkatiRepos;
 
-    //    private readonly ILogger<BerkatiController> _logger;
-
-    //    public BerkatiController(ILogger<BerkatiController> logger)
-    //    {
-    //        _logger = logger;
-    //    }
+        public BerkatiController()
+        {
+            this.berkatiRepos = new BerkatiRepository();
+        }
 
         [HttpGet]
-        public IActionResult Get()
+        //public IActionResult Get()
+        //{
+        //    string getString = "Hello, GET!";
+        //    return Ok(getString);
+        //}
+
+        public List<User> Get()
         {
-            string getString = "Hello, GET!";
-            return Ok(getString);
+            return berkatiRepos.GetAllUser();
         }
 
         [HttpPost]
