@@ -11,7 +11,7 @@
 *.sln.docstates
 
 #secrets
-Build/ConnectionString.cs
+.env
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

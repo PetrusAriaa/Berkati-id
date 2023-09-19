@@ -1,4 +1,4 @@
-using Berkati_Backend.Models;
+﻿using Berkati_Backend.Models;
 using Berkati_Backend.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -8,25 +8,23 @@ namespace Berkati_Backend.Controllers
     [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     [Route("[controller]")]
-    public class BerkatiController : ControllerBase
+    public class AdminController : Controller
     {
-        private readonly BerkatiRepository berkatiRepos;
-
-        public BerkatiController()
+        private readonly AdminRepository adminRepos;
+        public AdminController()
         {
-            this.berkatiRepos = new BerkatiRepository();
+            this.adminRepos = new AdminRepository();
         }
 
         [HttpGet]
-        //public IActionResult Get()
+        //public List<Admin> Get()
         //{
-        //    string getString = "Hello, GET!";
-        //    return Ok(getString);
+        //    return adminRepos.GetAllAdmin();
         //}
-
-        public List<User> Get()
+        public IActionResult Get()
         {
-            return berkatiRepos.GetAllUser();
+            string getString = "Hello, GET!";
+            return Ok(getString);
         }
 
         [HttpPost]

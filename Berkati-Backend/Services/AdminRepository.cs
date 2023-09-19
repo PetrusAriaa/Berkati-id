@@ -2,46 +2,47 @@
 using Npgsql;
 using System.Reflection.PortableExecutable;
 using System.Xml.Linq;
-using Berkati_Backend.Build;
+using DotNetEnv;
 
 namespace Berkati_Backend.Services
 {
-    public class BerkatiRepository
+    public class AdminRepository
     {
         private readonly NpgsqlConnection connection;
 
-        public BerkatiRepository()
+        public AdminRepository()
         {
-            // Connection string (HARUS DI HIDE)!!!!!!!!
-            var conn = new ConnectionString();
-            string _connectionString = conn.conn();
+            DotNetEnv.Env.Load("./Build/.env");
 
+            string _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
             // Initialize the NpgsqlConnection in the constructor
             connection = new NpgsqlConnection(_connectionString);
         }
 
-        public List<User> GetAllUser()
+        public List<Admin> GetAllAdmin()
         {
-            List<User> ListUser = new();
+            List<Admin> ListAdmin = new();
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"user\"", connection);
+                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"admin\"", connection);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    User user = new()
+                    Admin admin = new()
                     {
 
                         Id = reader.GetString(reader.GetOrdinal("_id")),
-                        Nama = reader.GetString(reader.GetOrdinal("nama")),
-                        Telp = reader.GetString(reader.GetOrdinal("telp")),
+                        Username = reader.GetString(reader.GetOrdinal("username")),
+                        Password = reader.GetString(reader.GetOrdinal("password")),
+                        LastLogin = reader.GetDateTime(reader.GetOrdinal("lastLogin")),
+                        IsSuperUser = reader.GetBoolean(reader.GetOrdinal("isSuperUser")),
                     };
 
-                    ListUser.Add(user);
+                    ListAdmin.Add(admin);
                 }
-               
+
             }
             catch (NpgsqlException ex)
             {
@@ -51,10 +52,8 @@ namespace Berkati_Backend.Services
             {
                 connection.Close();
             }
-            return ListUser;
+            return ListAdmin;
         }
+
     }
-
-
-
 }
