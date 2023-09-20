@@ -1,3 +1,5 @@
+﻿using Berkati_Backend.Models;
+using Berkati_Backend.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +8,19 @@ namespace Berkati_Backend.Controllers
     [EnableCors("AllowSpecificOrigin")]
     [ApiController]
     [Route("[controller]")]
-    public class BerkatiController : ControllerBase
+    public class AdminController : Controller
     {
-    //    private static readonly string[] Summaries = new[]
-    //    {
-    //    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    //};
-
-    //    private readonly ILogger<BerkatiController> _logger;
-
-    //    public BerkatiController(ILogger<BerkatiController> logger)
-    //    {
-    //        _logger = logger;
-    //    }
+        private readonly AdminRepository adminRepos;
+        public AdminController()
+        {
+            this.adminRepos = new AdminRepository();
+        }
 
         [HttpGet]
+        //public List<Admin> Get()
+        //{
+        //    return adminRepos.GetAllAdmin();
+        //}
         public IActionResult Get()
         {
             string getString = "Hello, GET!";
