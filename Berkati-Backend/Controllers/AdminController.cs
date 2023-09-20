@@ -15,30 +15,23 @@ namespace Berkati_Backend.Controllers
         {
             this.adminRepos = new AdminRepository();
         }
-
+        
         [HttpGet]
-        //public List<Admin> Get()
-        //{
-        //    return adminRepos.GetAllAdmin();
-        //}
-        public IActionResult Get()
+        public List<Admin> Get()
         {
-            string getString = "Hello, GET!";
-            return Ok(getString);
+            return adminRepos.GetAllAdmin();
         }
-
+        
         [HttpPost]
-        public IActionResult Post()
+        public void Post(Admin admin)
         {
-            string postString = "Hello, POST!";
-            return Ok(postString);
+            adminRepos.AddAdmin(admin);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id)
+        public void Put(Admin admin)
         {
-            string putString = $"Hello, PUT ke-{id}!";
-            return Ok(putString);
+            adminRepos.UpdateAdmin(admin);
         }
 
         [HttpDelete("{id}")]
