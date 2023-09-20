@@ -8,12 +8,101 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{x:Null}"
-        AllowsTransparency="True"
-        WindowStyle="None"
+        Background="White"
         WindowStartupLocation="CenterScreen">
     
-    <materialDesign:Card UniformCornerRadius="15" Background="{DynamicResource MaterialDesignPaper}" Margin="25">
-        
+    <materialDesign:Card UniformCornerRadius="15" Background="AliceBlue" Height="400" Width="300">
+        <materialDesign:Card.Effect>
+            <DropShadowEffect BlurRadius="15"
+                              Direction ="-90" 
+                              RenderingBias ="Quality" 
+                              ShadowDepth ="2" 
+                              Color ="Gray" />
+        </materialDesign:Card.Effect>
+        <StackPanel Orientation="Vertical"
+                    Margin="20">
+            <TextBlock Text="Login" 
+                       FontSize="25"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       FontWeight="Bold"
+                       Padding="10"
+                       />
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="User Name" 
+                   Grid.Row="0"
+                   Margin="0,15"
+                   HorizontalAlignment="Left"/>
+                <TextBox  Grid.Column="1"
+                  Grid.Row="1"
+                  Padding="0,5"
+                  Width="255"
+                  BorderThickness="0,0,0,1"
+                  HorizontalAlignment="Left"
+                  Text="Input User Name"/>
+                <TextBlock Text="Password" 
+                   Grid.Row="2"
+                   Margin="0,15"
+                   HorizontalAlignment="Left"/>
+                <PasswordBox Grid.Row="3"
+                      Password="mpcodes"
+                      Padding="0,5"                           
+                      Width="255"
+                      BorderThickness="0,0,0,1"
+                      HorizontalAlignment="Left"/>
+            </Grid>
+            <Button x:Name="LoginBtn" 
+                    Content="Login" 
+                    Foreground="White"
+                    Background="Black"
+                    Margin="0,25"
+                    Height="35"
+                    Width="250"
+                    Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="LoginBorder" Background="{TemplateBinding Background}"
+                                            CornerRadius="16">
+                                        <Border.Effect>
+                                            <!-- Efek bayangan menggunakan DropShadowEffect -->
+                                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                        </Border.Effect>
+                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <!-- Ubah efek bayangan saat tombol dihover -->
+                                            <Setter Property="Border.Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <!-- Ubah efek bayangan saat tombol diklik -->
+                                            <Setter Property="Border.Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
     </materialDesign:Card>
 </Window>
