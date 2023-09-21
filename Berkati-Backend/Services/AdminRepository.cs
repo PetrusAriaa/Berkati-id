@@ -19,7 +19,13 @@ namespace Berkati_Backend.Services
             connection = new NpgsqlConnection(_connectionString);
         }
 
-        public List<Admin> GetAllAdmin()
+        //public AdminRepository(string _connectionString)
+        //{
+        //    // Initialize the NpgsqlConnection in the constructor
+        //    connection = new NpgsqlConnection(_connectionString);
+        //}
+
+        public virtual List<Admin> GetAllAdmin()
         {
             List<Admin> ListAdmin = new();
             try
@@ -111,6 +117,23 @@ namespace Berkati_Backend.Services
             {
                 connection.Close();
             }
+        }
+
+        public bool AdminLogin(string username, string password)
+        {
+            List<Admin> ListAdmin = new();
+            ListAdmin.AddRange(GetAllAdmin());
+            foreach (Admin admin in ListAdmin)
+            {
+                if (admin.Username == username && admin.Password == password)
+                {
+                    admin.LastLogin = DateTime.Now;
+                    UpdateAdmin(admin);
+                    return true;
+                }
+            }
+            return false;
+
         }
 
     }

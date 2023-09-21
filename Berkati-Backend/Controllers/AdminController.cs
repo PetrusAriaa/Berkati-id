@@ -40,5 +40,6 @@ namespace Berkati_Backend.Controllers
             string deleteString = $"Hello, DELETE ke-{id}!";
             return Ok(deleteString);
         }
+
     }
 }

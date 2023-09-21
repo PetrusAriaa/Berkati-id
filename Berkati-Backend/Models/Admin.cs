@@ -21,22 +21,33 @@ namespace Berkati_Backend.Models
 
         }
 
-        private readonly AdminRepository adminRepos;
-        private readonly List<Admin> ListAdmin = new();
-
         public bool Login(string username, string password)
         {
-            ListAdmin.AddRange(adminRepos.GetAllAdmin());
-            foreach (Admin admin in ListAdmin)
+            var adminRepos = new AdminRepository();
             {
-                if (admin.Username == username && admin.Password == password)
+                if (adminRepos.AdminLogin(username, password))
                 {
-                    LastLogin = DateTime.Now;
                     return true;
                 }
             }
             return false;
         }
 
+        //public bool Login(string username, string password)
+        //{
+        //    var adminRepos = new AdminRepository();
+        //    var ListAdmin = new List<Admin>();
+        //    ListAdmin.AddRange(adminRepos.GetAllAdmin());
+        //    foreach (Admin admin in ListAdmin)
+        //    {
+        //        if (admin.Username == username && admin.Password == password)
+        //        {
+        //            admin.LastLogin = DateTime.Now;
+        //            adminRepos.UpdateAdmin(admin);
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }
