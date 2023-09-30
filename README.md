@@ -10,3 +10,6 @@ Aplikasi untuk memfasilitasi keinginan pengguna yang ingin bersedekah makanan la
 
 # Class Diagram
 <img src="docs/Class Diagram.png" />
+
+# ERD Model
+<img src="docs/ERD Model.png" />
