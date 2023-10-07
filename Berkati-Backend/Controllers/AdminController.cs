@@ -7,7 +7,7 @@ namespace Berkati_Backend.Controllers
 {
     [EnableCors("AllowSpecificOrigin")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("admin")]
     public class AdminController : Controller
     {
         private readonly AdminRepository adminRepos;
@@ -23,7 +23,7 @@ namespace Berkati_Backend.Controllers
         }
         
         [HttpPost]
-        public void Post(Admin admin)
+        public void Post([FromBody] Admin admin)
         {
             adminRepos.AddAdmin(admin);
         }

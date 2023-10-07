@@ -12,18 +12,11 @@ namespace Berkati_Backend.Services
 
         public AdminRepository()
         {
-            DotNetEnv.Env.Load("./Build/.env");
+            Env.Load("./Build/.env");
 
-            string _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-            // Initialize the NpgsqlConnection in the constructor
+            string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
             connection = new NpgsqlConnection(_connectionString);
         }
-
-        //public AdminRepository(string _connectionString)
-        //{
-        //    // Initialize the NpgsqlConnection in the constructor
-        //    connection = new NpgsqlConnection(_connectionString);
-        //}
 
         public virtual List<Admin> GetAllAdmin()
         {
@@ -39,7 +32,7 @@ namespace Berkati_Backend.Services
                     Admin admin = new()
                     {
 
-                        Id = reader.GetString(reader.GetOrdinal("id")),
+                        Id = reader.GetGuid(reader.GetOrdinal("id")),
                         Username = reader.GetString(reader.GetOrdinal("username")),
                         Password = reader.GetString(reader.GetOrdinal("password")),
                         LastLogin = reader.GetDateTime(reader.GetOrdinal("last_login")),
@@ -70,12 +63,11 @@ namespace Berkati_Backend.Services
                 {
                     Parameters =
                     {
-                        new("id", admin.Id),
+                        new("id", Guid.NewGuid()),
                         new("username", admin.Username),
                         new("password", admin.Password),
-                        new("last_login", admin.LastLogin),
+                        new("last_login", DateTime.Now),
                         new("is_super_user", admin.IsSuperUser)
-
                     }
                 };
                 cmd.ExecuteNonQuery();
@@ -100,7 +92,7 @@ namespace Berkati_Backend.Services
                 {
                     Parameters =
                     {
-                        new("id", admin.Id),
+                        //new("id", admin.Id),
                         new("username", admin.Username),
                         new("password", admin.Password),
                         new("last_login", admin.LastLogin)

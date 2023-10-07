@@ -12,8 +12,8 @@ namespace Berkati_Backend.Services
 
         public UserRepository()
         {
-            DotNetEnv.Env.Load("./Build/.env");
-            string _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            Env.Load("./Build/.env");
+            string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
             // Initialize the NpgsqlConnection in the constructor
             connection = new NpgsqlConnection(_connectionString);
