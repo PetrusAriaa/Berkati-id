@@ -14,8 +14,6 @@ namespace Berkati_Backend.Services
         {
             Env.Load("./Build/.env");
             string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-
-            // Initialize the NpgsqlConnection in the constructor
             connection = new NpgsqlConnection(_connectionString);
         }
 
@@ -25,22 +23,20 @@ namespace Berkati_Backend.Services
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"user\"", connection);
+                NpgsqlCommand cmd = new ("SELECT * FROM \"user\"", connection);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
                     User user = new()
                     {
-
-                        Id = reader.GetString(reader.GetOrdinal("_id")),
+                        Id = reader.GetGuid(reader.GetOrdinal("id")),
                         Nama = reader.GetString(reader.GetOrdinal("nama")),
                         Telp = reader.GetString(reader.GetOrdinal("telp")),
                     };
 
                     ListUser.Add(user);
                 }
-               
             }
             catch (NpgsqlException ex)
             {
@@ -53,12 +49,13 @@ namespace Berkati_Backend.Services
             return ListUser;
         }
 
-        public void AddUser(User user)
+        public Guid AddUser(User user)
         {
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO \"user\" (_id, nama, telp) VALUES(@id, @nama, @telp)", connection)
+                user.Id = Guid.NewGuid();
+                NpgsqlCommand cmd = new ("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
                 {
                     Parameters =
                     {
@@ -68,7 +65,6 @@ namespace Berkati_Backend.Services
                     }
                 };
                 cmd.ExecuteNonQuery();
-
             }
             catch (NpgsqlException ex)
             {
@@ -78,25 +74,28 @@ namespace Berkati_Backend.Services
             {
                 connection.Close();
             }
+            return user.Id;
         }
-        public void DeleteUser(string id)
+        public void DeleteUser(Guid userId)
         {
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("DELETE FROM \"user\" WHERE _id = @id;", connection)
+                NpgsqlCommand cmd = new ("DELETE FROM \"user\" WHERE id = @id;", connection)
                 {
                     Parameters =
                     {
-                        new("id", id)
+                        new("id", userId)
                     }
                 };
                 cmd.ExecuteNonQuery();
-
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                if (ex is NpgsqlException)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
             }
             finally
             {
@@ -109,7 +108,7 @@ namespace Berkati_Backend.Services
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"user\" SET nama = @nama, telp = @telp WHERE _id = @id;", connection)
+                NpgsqlCommand cmd = new ("UPDATE \"user\" SET nama = @nama, telp = @telp WHERE id = @id;", connection)
                 {
                     Parameters =
                     {

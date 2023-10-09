@@ -7,7 +7,7 @@ namespace Berkati_Backend.Controllers
 {
     [EnableCors("AllowSpecificOrigin")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("user")]
     public class UserController : ControllerBase
     {
         private readonly UserRepository userRepos;
@@ -18,27 +18,37 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpGet]
-        public List<User> Get()
+        public IActionResult Get()
         {
-            return userRepos.GetAllUser();
+            List<User> _data = userRepos.GetAllUser();
+            var res = new
+            {
+                data = _data,
+                length = _data.Count,
+                accessedAt = DateTime.UtcNow
+            };
+            return Ok(res);
         }
 
         [HttpPost]
-        public void Post(User user)
+        public IActionResult Post([FromBody]User user)
         {
-            userRepos.AddUser(user);
+            Guid userId = userRepos.AddUser(user);
+            return Created(userId.ToString(), user);
         }
 
         [HttpPut("{id}")]
-        public void Put(User user)
+        public IActionResult Put(User user)
         {
             userRepos.UpdateUser(user);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(Guid id)
         {
             userRepos.DeleteUser(id);
+            return NoContent();
         }
     }
 }
