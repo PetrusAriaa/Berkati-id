@@ -1,9 +1,9 @@
 ﻿namespace Berkati_Backend.Models
 {
-    public class UserRequests
+    public class Requests
     {
-        private string _id;
-        private string _userId;
+        private Guid _id;
+        private Guid _userId;
         private DateTime tanggal;
         private string jalan;
         private string rt;
@@ -13,11 +13,11 @@
         private string kab_kota;
         private string provinsi;
         private string kodepos;
-        private UInt32 est_jumlah;
-        private bool status;
+        private int est_jumlah;
+        private string status;
 
-        public string Id { get => _id; set => _id = value; }
-        public string UserId { get => _userId; set => _userId = value; }
+        public Guid Id { get => _id; set => _id = value; }
+        public Guid UserId { get => _userId; set => _userId = value; }
         public DateTime Tanggal { get => tanggal; set => tanggal = value; }
         public string Jalan { get => jalan; set => jalan = value; }
         public string Rt { get => rt; set => rt = value; }
@@ -27,12 +27,12 @@
         public string Kab_kota { get => kab_kota; set => kab_kota = value; }
         public string Provinsi { get => provinsi; set => provinsi = value; }
         public string Kodepos { get => kodepos; set => kodepos = value; }
-        public uint Est_jumlah { get => est_jumlah; set => est_jumlah = value; }
-        public bool Status { get => status; set => status = value; }
+        public int Est_jumlah { get => est_jumlah; set => est_jumlah = value; }
+        public string Status { get => status; set => status = value; }
 
-        public UserRequests()
+        public Requests()
         {
-
+            
         }
     }
 }
