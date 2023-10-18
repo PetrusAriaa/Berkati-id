@@ -17,28 +17,38 @@ namespace Berkati_Backend.Controllers
         }
         
         [HttpGet]
-        public List<Admin> Get()
+        public IActionResult Get()
         {
-            return adminRepos.GetAllAdmin();
+            List<Admin> _data = adminRepos.GetAllAdmin();
+            var res = new
+            {
+                data = _data,
+                length = _data.Count,
+                accessedAt = DateTime.UtcNow
+            };
+            return Ok(res);
         }
         
         [HttpPost]
-        public void Post([FromBody] Admin admin)
+        public IActionResult Post([FromBody]Admin admin)
         {
-            adminRepos.AddAdmin(admin);
+            Guid Id = adminRepos.AddAdmin(admin);
+            return Created(Id.ToString(), admin);
         }
 
         [HttpPut("{id}")]
-        public void Put(Admin admin)
+        public IActionResult Put(Admin admin)
         {
             adminRepos.UpdateAdmin(admin);
+            return NoContent();
         }
 
+        // API DELETE nya jangan lupa ditambahin yaa :D
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             string deleteString = $"Hello, DELETE ke-{id}!";
-            return Ok(deleteString);
+            return NoContent();
         }
 
     }

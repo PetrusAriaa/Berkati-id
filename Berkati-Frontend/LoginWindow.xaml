@@ -6,12 +6,19 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Berkati_Frontend"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800"
+        Title="LoginWindow" Height="550" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="White"
         WindowStartupLocation="CenterScreen">
-    
-    <materialDesign:Card UniformCornerRadius="15" Background="AliceBlue" Height="400" Width="300">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Card Login -->
+        <materialDesign:Card UniformCornerRadius="15" Background="AliceBlue" Height="400" Width="300">
         <materialDesign:Card.Effect>
             <DropShadowEffect BlurRadius="15"
                               Direction ="-90" 
@@ -19,9 +26,17 @@
                               ShadowDepth ="2" 
                               Color ="Gray" />
         </materialDesign:Card.Effect>
-        <StackPanel Orientation="Vertical"
-                    Margin="20">
-            <TextBlock Text="Login" 
+            <StackPanel Orientation="Vertical" Margin="20">
+                <!-- Teks "Berkati" -->
+                <TextBlock Text="Berkati"
+                   FontSize="27"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   FontWeight="Bold"
+                   Margin="0,20,0,0"
+                   />
+                <!-- Teks "Login" -->
+                <TextBlock Text="Login" 
                        FontSize="25"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
@@ -45,17 +60,17 @@
                   Width="255"
                   BorderThickness="0,0,0,1"
                   HorizontalAlignment="Left"
-                  Text="Input User Name"/>
+                  materialDesign:HintAssist.Hint="Input User Name"/>
                 <TextBlock Text="Password" 
                    Grid.Row="2"
                    Margin="0,15"
                    HorizontalAlignment="Left"/>
                 <PasswordBox Grid.Row="3"
-                      Password="mpcodes"
-                      Padding="0,5"                           
-                      Width="255"
-                      BorderThickness="0,0,0,1"
-                      HorizontalAlignment="Left"/>
+                   materialDesign:HintAssist.Hint="Input Password"
+                   Padding="0,5"                           
+                   Width="255"
+                   BorderThickness="0,0,0,1"
+                   HorizontalAlignment="Left"/>
             </Grid>
             <Button x:Name="LoginBtn" 
                     Content="Login" 
@@ -105,4 +120,5 @@
             </Button>
         </StackPanel>
     </materialDesign:Card>
+    </Grid>
 </Window>

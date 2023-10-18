@@ -24,12 +24,12 @@ namespace Berkati_Backend.Services
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"admin\"", connection);
+                NpgsqlCommand cmd = new ("SELECT * FROM \"admin\"", connection);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    Admin admin = new()
+                    Admin admin = new ()
                     {
 
                         Id = reader.GetGuid(reader.GetOrdinal("id")),
@@ -54,16 +54,17 @@ namespace Berkati_Backend.Services
             return ListAdmin;
         }
 
-        public void AddAdmin(Admin admin)
+        public Guid AddAdmin(Admin admin)
         {
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO \"admin\" (id, username, password, last_login, is_super_user) VALUES(@id, @username, @password, @last_login, @is_super_user)", connection)
+                admin.Id = Guid.NewGuid();
+                NpgsqlCommand cmd = new("INSERT INTO \"admin\" (id, username, password, last_login, is_super_user) VALUES(@id, @username, @password, @last_login, @is_super_user)", connection)
                 {
                     Parameters =
                     {
-                        new("id", Guid.NewGuid()),
+                        new("id", admin.Id),
                         new("username", admin.Username),
                         new("password", admin.Password),
                         new("last_login", DateTime.Now),
@@ -81,6 +82,8 @@ namespace Berkati_Backend.Services
             {
                 connection.Close();
             }
+
+            return admin.Id;
         }
 
         public void UpdateAdmin(Admin admin)
@@ -88,14 +91,12 @@ namespace Berkati_Backend.Services
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"admin\" SET username=@username, password=@password, last_login=@last_login WHERE id = @id;", connection)
+                NpgsqlCommand cmd = new ("UPDATE \"admin\" SET username=@username, password=@password WHERE id = @id;", connection)
                 {
                     Parameters =
                     {
-                        //new("id", admin.Id),
                         new("username", admin.Username),
                         new("password", admin.Password),
-                        new("last_login", admin.LastLogin)
                     }
                 };
                 cmd.ExecuteNonQuery();
