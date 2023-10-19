@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Berkati_Frontend
+namespace Berkati_Frontend.Pages
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for Page4.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class Page4 : Page
     {
-        public LoginWindow()
+        public Page4()
         {
             InitializeComponent();
-        }
-
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
         }
     }
 }

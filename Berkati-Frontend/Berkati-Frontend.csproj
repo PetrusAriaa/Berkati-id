@@ -9,10 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\FaFreeSolid.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AdonisUI" Version="1.17.1" />
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.17.1" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\FaFreeSolid.otf" />
   </ItemGroup>
 
 </Project>

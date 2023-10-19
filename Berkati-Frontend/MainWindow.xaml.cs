@@ -24,5 +24,14 @@ namespace Berkati_Frontend
         {
             InitializeComponent();
         }
+
+        private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            var selected = sidebar.SelectedItem as NavButton;
+
+            navframe.Navigate(selected.Navlink);
+
+        }
     }
 }
