@@ -4,121 +4,138 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:Berkati_Frontend"
         mc:Ignorable="d"
         Title="LoginWindow" Height="550" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="White"
         WindowStartupLocation="CenterScreen">
-
+    <!-- Grid untuk mengatur susunan UI -->
     <Grid>
-
+        <!-- Row Definition: Mengatur tinggi baris sesuai kebutuhan -->
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Card Login -->
         <materialDesign:Card UniformCornerRadius="15" Background="AliceBlue" Height="400" Width="300">
-        <materialDesign:Card.Effect>
-            <DropShadowEffect BlurRadius="15"
-                              Direction ="-90" 
-                              RenderingBias ="Quality" 
-                              ShadowDepth ="2" 
-                              Color ="Gray" />
-        </materialDesign:Card.Effect>
+            <!-- Efek bayangan untuk card -->
+            <materialDesign:Card.Effect>
+                <DropShadowEffect BlurRadius="15"
+                                  Direction="-90"
+                                  RenderingBias="Quality"
+                                  ShadowDepth="2"
+                                  Color="Gray" />
+            </materialDesign:Card.Effect>
+            <!-- StackPanel untuk menyusun elemen-elemen UI di dalam card -->
             <StackPanel Orientation="Vertical" Margin="20">
                 <!-- Teks "Berkati" -->
                 <TextBlock Text="Berkati"
-                   FontSize="27"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   FontWeight="Bold"
-                   Margin="0,20,0,0"
-                   />
+                           FontSize="27"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           FontWeight="Bold"
+                           Margin="0,20,0,0"/>
                 <!-- Teks "Login" -->
-                <TextBlock Text="Login" 
-                       FontSize="25"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top"
-                       FontWeight="Bold"
-                       Padding="10"
-                       />
-            <Grid VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="User Name" 
-                   Grid.Row="0"
-                   Margin="0,15"
-                   HorizontalAlignment="Left"/>
-                <TextBox  Grid.Column="1"
-                  Grid.Row="1"
-                  Padding="0,5"
-                  Width="255"
-                  BorderThickness="0,0,0,1"
-                  HorizontalAlignment="Left"
-                  materialDesign:HintAssist.Hint="Input User Name"/>
-                <TextBlock Text="Password" 
-                   Grid.Row="2"
-                   Margin="0,15"
-                   HorizontalAlignment="Left"/>
-                <PasswordBox Grid.Row="3"
-                   materialDesign:HintAssist.Hint="Input Password"
-                   Padding="0,5"                           
-                   Width="255"
-                   BorderThickness="0,0,0,1"
-                   HorizontalAlignment="Left"/>
-            </Grid>
-            <Button x:Name="LoginBtn" 
-                    Content="Login" 
-                    Foreground="White"
-                    Background="Black"
-                    Margin="0,25"
-                    Height="35"
-                    Width="250"
-                    Cursor="Hand">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="LoginBorder" Background="{TemplateBinding Background}"
-                                            CornerRadius="16">
-                                        <Border.Effect>
-                                            <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
-                                        </Border.Effect>
-                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <!-- Ubah efek bayangan saat tombol dihover -->
-                                            <Setter Property="Border.Effect">
-                                                <Setter.Value>
-                                                    <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <!-- Ubah efek bayangan saat tombol diklik -->
-                                            <Setter Property="Border.Effect">
-                                                <Setter.Value>
-                                                    <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </StackPanel>
-    </materialDesign:Card>
+                <TextBlock Text="Login"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           FontWeight="Bold"
+                           Padding="10"/>
+                <!-- Grid untuk mengatur tata letak elemen-elemen input -->
+                <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Label dan TextBox untuk input username -->
+                    <TextBlock Text="User Name"
+                               Grid.Row="0"
+                               Margin="0,15"
+                               HorizontalAlignment="Left"/>
+                    <TextBox Grid.Column="1"
+                             Grid.Row="1"
+                             Padding="0,5"
+                             Width="255"
+                             MaxLength="20"
+                             BorderThickness="0,0,0,1"
+                             HorizontalAlignment="Left"
+                             materialDesign:HintAssist.Hint="Input User Name"/>
+                    <!-- Label dan PasswordBox untuk input password -->
+                    <TextBlock Text="Password"
+                               Grid.Row="2"
+                               Margin="0,15"
+                               HorizontalAlignment="Left"/>
+                    <PasswordBox Grid.Row="3"
+                                 materialDesign:HintAssist.Hint="Input Password"
+                                 Padding="0,5"
+                                 Width="255"
+                                 MaxLength="16"
+                                 BorderThickness="0,0,0,1"
+                                 HorizontalAlignment="Left"/>
+                </Grid>
+                <!-- Button Login -->
+                <Button x:Name="LoginBtn"
+                        Foreground="White"
+                        Background="Black"
+                        Margin="0,25"
+                        Height="35"
+                        Width="250"
+                        Cursor="Hand" Click="LoginBtn_Click">
+                    <!-- Mengatur letak content dengan icon -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center">Login</TextBlock>
+                        <!-- Icon login -->
+                        <iconPacks:PackIconMaterial Kind="LoginVariant"
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <!-- Mengatur style dari Login button -->
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="LoginBorder" Background="{TemplateBinding Background}"
+                                                CornerRadius="16">
+                                            <Border.Effect>
+                                                <!-- Efek bayangan menggunakan DropShadowEffect -->
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                            </Border.Effect>
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <!-- Ubah efek bayangan saat tombol dihover -->
+                                                <Setter Property="Border.Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <!-- Ubah efek bayangan saat tombol diklik -->
+                                                <Setter Property="Border.Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </materialDesign:Card>
     </Grid>
 </Window>
