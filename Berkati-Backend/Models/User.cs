@@ -48,9 +48,9 @@ namespace Berkati_Backend.Models
                     ListUser.Add(user);
                 }
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                throw new Exception("Error occurred while retrieving users.", ex);
             }
             finally
             {
@@ -76,9 +76,9 @@ namespace Berkati_Backend.Models
                 };
                 cmd.ExecuteNonQuery();
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                throw new Exception("Error occurred while creating user.", ex);
             }
             finally
             {
@@ -102,10 +102,7 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
-                if (ex is NpgsqlException)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
+                throw new Exception("Error occurred while deleting user.", ex);
             }
             finally
             {
@@ -130,9 +127,9 @@ namespace Berkati_Backend.Models
                 cmd.ExecuteNonQuery();
 
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                throw new Exception("Error occurred while updating user.", ex);
             }
             finally
             {

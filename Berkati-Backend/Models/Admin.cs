@@ -53,9 +53,14 @@ namespace Berkati_Backend.Models
                 }
 
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Error occurred within database.", ex);
+                }
+                throw new Exception("Error occurred while retrieving admins.", ex); ;
+                
             }
             finally
             {
@@ -84,9 +89,9 @@ namespace Berkati_Backend.Models
                 cmd.ExecuteNonQuery();
 
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                throw new Exception("Error occurred while creating admin.", ex);
             }
             finally
             {
@@ -112,9 +117,33 @@ namespace Berkati_Backend.Models
                 cmd.ExecuteNonQuery();
 
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                throw new Exception("Error occurred while updating admin.", ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void DeleteAdmin(Guid adminId)
+        {
+            try
+            {
+                connection.Open();
+                NpgsqlCommand cmd = new("DELETE FROM \"admin\" WHERE id = @id;", connection)
+                {
+                    Parameters =
+                    {
+                        new("id", adminId)
+                    }
+                };
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while deleting admin.", ex);
             }
             finally
             {

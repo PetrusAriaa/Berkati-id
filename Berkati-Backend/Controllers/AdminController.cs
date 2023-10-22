@@ -18,36 +18,65 @@ namespace Berkati_Backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Admin> _data = admins.GetAllAdmin();
-            var res = new
+            try
             {
-                data = _data,
-                length = _data.Count,
-                accessedAt = DateTime.UtcNow
-            };
-            return Ok(res);
+                List<Admin> _data = admins.GetAllAdmin();
+                var res = new
+                {
+                    data = _data,
+                    length = _data.Count,
+                    accessedAt = DateTime.UtcNow
+                };
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            
         }
         
         [HttpPost]
         public IActionResult Post([FromBody]Admin admin)
         {
-            Guid Id = admins.AddAdmin(admin);
-            return Created(Id.ToString(), admin);
+            try
+            {
+                Guid Id = admins.AddAdmin(admin);
+                return Created(Id.ToString(), admin);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(Admin admin)
         {
-            admins.UpdateAdmin(admin);
-            return NoContent();
+            try
+            {
+                admins.UpdateAdmin(admin);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        // API DELETE nya jangan lupa ditambahin yaa :D
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            string deleteString = $"Hello, DELETE ke-{id}!";
-            return NoContent();
+            try
+            {
+                admins.DeleteAdmin(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
     }

@@ -73,9 +73,9 @@ namespace Berkati_Backend.Models
                 }
 
             }
-            catch (NpgsqlException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                throw new Exception("Error occurred while retrieving requests.", ex);
             }
             finally
             {

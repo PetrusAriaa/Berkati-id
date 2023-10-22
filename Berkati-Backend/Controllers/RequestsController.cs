@@ -19,14 +19,21 @@ namespace Berkati_Backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Requests> _data = requests.GetRequests();
-            var res = new
+            try
             {
-                data = _data,
-                length = _data.Count,
-                accessedAt = DateTime.UtcNow
-            };
-            return Ok(res);
+                List<Requests> _data = requests.GetRequests();
+                var res = new
+                {
+                    data = _data,
+                    length = _data.Count,
+                    accessedAt = DateTime.UtcNow
+                };
+                return Ok(res);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
