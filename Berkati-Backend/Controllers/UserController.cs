@@ -1,5 +1,4 @@
 using Berkati_Backend.Models;
-using Berkati_Backend.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,17 +9,17 @@ namespace Berkati_Backend.Controllers
     [Route("user")]
     public class UserController : ControllerBase
     {
-        private readonly UserRepository userRepos;
+        private readonly User users;
 
         public UserController()
         {
-            this.userRepos = new UserRepository();
+            this.users = new User();
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            List<User> _data = userRepos.GetAllUser();
+            List<User> _data = users.GetAllUser();
             var res = new
             {
                 data = _data,
@@ -33,21 +32,21 @@ namespace Berkati_Backend.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]User user)
         {
-            Guid userId = userRepos.AddUser(user);
+            Guid userId = users.AddUser(user);
             return Created(userId.ToString(), user);
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(User user)
         {
-            userRepos.UpdateUser(user);
+            users.UpdateUser(user);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            userRepos.DeleteUser(id);
+            users.DeleteUser(id);
             return NoContent();
         }
     }

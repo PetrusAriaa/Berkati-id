@@ -1,5 +1,4 @@
 ﻿using Berkati_Backend.Models;
-using Berkati_Backend.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +9,16 @@ namespace Berkati_Backend.Controllers
     [Route("admin")]
     public class AdminController : Controller
     {
-        private readonly AdminRepository adminRepos;
+        private readonly Admin admins;
         public AdminController()
         {
-            this.adminRepos = new AdminRepository();
+            this.admins = new Admin();
         }
         
         [HttpGet]
         public IActionResult Get()
         {
-            List<Admin> _data = adminRepos.GetAllAdmin();
+            List<Admin> _data = admins.GetAllAdmin();
             var res = new
             {
                 data = _data,
@@ -32,14 +31,14 @@ namespace Berkati_Backend.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Admin admin)
         {
-            Guid Id = adminRepos.AddAdmin(admin);
+            Guid Id = admins.AddAdmin(admin);
             return Created(Id.ToString(), admin);
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(Admin admin)
         {
-            adminRepos.UpdateAdmin(admin);
+            admins.UpdateAdmin(admin);
             return NoContent();
         }
 

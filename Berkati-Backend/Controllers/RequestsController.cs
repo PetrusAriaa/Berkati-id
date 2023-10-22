@@ -1,5 +1,4 @@
 ﻿using Berkati_Backend.Models;
-using Berkati_Backend.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,17 +9,17 @@ namespace Berkati_Backend.Controllers
     [Route("requests")]
     public class RequestsController : ControllerBase
     {
-        private readonly RequestsRepository requestsRepos;
+        private readonly Requests requests;
 
         public RequestsController()
         {
-            this.requestsRepos = new RequestsRepository();
+            this.requests = new Requests();
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            List<Requests> _data = requestsRepos.GetRequests();
+            List<Requests> _data = requests.GetRequests();
             var res = new
             {
                 data = _data,
