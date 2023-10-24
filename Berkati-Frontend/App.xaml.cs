@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Berkati_Frontend.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,12 @@ namespace Berkati_Frontend
     /// </summary>
     public partial class App : Application
     {
+        public DonaturViewModel? DonaturViewModel { get; set; }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            DonaturViewModel = new DonaturViewModel();
+        }
     }
 }

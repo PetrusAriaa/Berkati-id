@@ -8,7 +8,55 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
 
-    <Grid>
-        <TextBlock Text="PAGE 1" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>
-    </Grid>
+    <DockPanel>
+        <!-- TULISAN "ADD LIST" DI BAWAH PALING BAWAH -->
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+            <!-- Teks "LIST BERBAGI" -->
+            <TextBlock Text="LIST BERBAGI" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,10" />
+        </StackPanel>
+        <Grid>
+            <!-- ItemsControl dengan tata letak kartu (WrapPanel) -->
+            <ItemsControl x:Name="DonaturItemsControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Margin="5">
+                            <!-- Konten Kartu (Card Content) -->
+                            <StackPanel Margin="10">
+                                <TextBlock Text="{Binding Nama}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Jenis:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Jenis}" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Jumlah:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Jumlah}" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Satuan:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Satuan}" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Alamat:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Alamat}" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tanggal:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Tanggal, StringFormat=dd/MM/yyyy}" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Waktu:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Jam}" Margin="5"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </DockPanel>
 </Page>
