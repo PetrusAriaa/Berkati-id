@@ -1,6 +1,7 @@
 ﻿using Berkati_Backend.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Berkati_Backend.Controllers
 {
@@ -77,6 +78,42 @@ namespace Berkati_Backend.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] JsonElement requestBody)
+        {
+            try
+            {
+                if (requestBody.TryGetProperty("username", out var usernameProperty) && requestBody.TryGetProperty("password", out var passwordProperty))
+                {
+                    string username = usernameProperty.GetString();
+                    string password = passwordProperty.GetString();
+
+                    if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                    {
+                        return BadRequest("Invalid login request.");
+                    }
+
+                    Admin _data = admins.Login(username, password);
+                    var res = new
+                    {
+                        data = _data,
+                        accessedAt = DateTime.UtcNow
+                    };
+                    return Ok(res);
+                }
+                else
+                {
+                    return BadRequest("Invalid login request format.");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
     }

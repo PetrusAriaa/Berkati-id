@@ -106,7 +106,7 @@ namespace Berkati_Backend.Models
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new("UPDATE \"admin\" SET username=@username, password=@password WHERE id = @id;", connection)
+                NpgsqlCommand cmd = new("UPDATE \"admin\" SET username = @username, password=@password WHERE id = @id;", connection)
                 {
                     Parameters =
                     {
@@ -151,20 +151,37 @@ namespace Berkati_Backend.Models
             }
         }
 
-        public bool Login(string username, string password)
+        public Admin? Login(string username, string password)
         {
-            List<Admin> ListAdmin = new();
-            ListAdmin.AddRange(GetAllAdmin());
-            foreach (Admin admin in ListAdmin)
+            try
             {
-                if (admin.Username == username && admin.Password == password)
+                List<Admin> ListAdmin = new();
+                ListAdmin.AddRange(GetAllAdmin());
+                foreach (Admin admin in ListAdmin)
                 {
-                    admin.LastLogin = DateTime.Now;
-                    UpdateAdmin(admin);
-                    return true;
+                    if (admin.Username == username && admin.Password == password)
+                    {
+                        admin.LastLogin = DateTime.Now;
+                        connection.Open();
+                        NpgsqlCommand cmd = new("UPDATE \"admin\" SET last_login = @last_login WHERE id = @id;", connection)
+                        {
+                            Parameters =
+                            {
+                                new("last_login", admin.LastLogin),
+                                new("id", admin.Id),
+                            }
+                        };
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                        return admin;
+                    }
                 }
+                return null;
             }
-            return false;
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while login.", ex);
+            }
 
         }
 
