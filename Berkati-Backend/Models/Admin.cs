@@ -110,6 +110,7 @@ namespace Berkati_Backend.Models
                 {
                     Parameters =
                     {
+                        new("id", admin.Id),
                         new("username", admin.Username),
                         new("password", admin.Password),
                     }

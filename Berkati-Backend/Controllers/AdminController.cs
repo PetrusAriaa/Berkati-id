@@ -53,10 +53,11 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Admin admin)
+        public IActionResult Put(Guid id, Admin admin)
         {
             try
             {
+                admin.Id = id;
                 admins.UpdateAdmin(admin);
                 return NoContent();
             }
