@@ -50,6 +50,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while retrieving users.", ex);
             }
             finally
@@ -78,6 +82,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while creating user.", ex);
             }
             finally
@@ -102,6 +110,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while deleting user.", ex);
             }
             finally
@@ -129,6 +141,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while updating user.", ex);
             }
             finally

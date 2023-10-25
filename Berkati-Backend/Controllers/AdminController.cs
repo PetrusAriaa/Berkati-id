@@ -53,10 +53,11 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Admin admin)
+        public IActionResult Put(Guid id, Admin admin)
         {
             try
             {
+                admin.Id = id;
                 admins.UpdateAdmin(admin);
                 return NoContent();
             }
@@ -95,10 +96,10 @@ namespace Berkati_Backend.Controllers
                         return BadRequest("Invalid login request.");
                     }
 
-                    Admin _data = admins.Login(username, password);
+                    bool isLogin = admins.Login(username, password);
                     var res = new
                     {
-                        data = _data,
+                        data = isLogin,
                         accessedAt = DateTime.UtcNow
                     };
                     return Ok(res);

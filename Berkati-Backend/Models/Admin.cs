@@ -1,6 +1,9 @@
 ﻿using Npgsql.Internal.TypeHandlers;
 using DotNetEnv;
 using Npgsql;
+using BC = BCrypt.Net.BCrypt;
+using Microsoft.AspNetCore.Identity;
+using System.Reflection.PortableExecutable;
 
 namespace Berkati_Backend.Models
 {
@@ -57,7 +60,7 @@ namespace Berkati_Backend.Models
             {
                 if (ex is NpgsqlException)
                 {
-                    throw new Exception("Error occurred within database.", ex);
+                    throw new Exception("Database-related error occurred.", ex);
                 }
                 throw new Exception("Error occurred while retrieving admins.", ex); ;
                 
@@ -75,6 +78,7 @@ namespace Berkati_Backend.Models
             {
                 connection.Open();
                 admin.Id = Guid.NewGuid();
+                admin.Password = EncryptPassword(admin.Password);
                 NpgsqlCommand cmd = new("INSERT INTO \"admin\" (id, username, password, last_login, is_super_user) VALUES(@id, @username, @password, @last_login, @is_super_user)", connection)
                 {
                     Parameters =
@@ -91,6 +95,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while creating admin.", ex);
             }
             finally
@@ -110,6 +118,7 @@ namespace Berkati_Backend.Models
                 {
                     Parameters =
                     {
+                        new("id", admin.Id),
                         new("username", admin.Username),
                         new("password", admin.Password),
                     }
@@ -119,6 +128,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while updating admin.", ex);
             }
             finally
@@ -143,6 +156,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while deleting admin.", ex);
             }
             finally
@@ -151,35 +168,60 @@ namespace Berkati_Backend.Models
             }
         }
 
-        public Admin? Login(string username, string password)
+        public string EncryptPassword(string password)
         {
+            string encryptedPass = BC.EnhancedHashPassword(password, 13);
+            return encryptedPass;
+        }
+        
+        public bool Login(string username, string password)
+        {
+            Admin admin = null;
             try
             {
-                List<Admin> ListAdmin = new();
-                ListAdmin.AddRange(GetAllAdmin());
-                foreach (Admin admin in ListAdmin)
+                connection.Open();
+                NpgsqlCommand cmd = new("SELECT * FROM \"admin\" WHERE username=@username", connection);
+                cmd.Parameters.AddWithValue("username", username);
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    if (admin.Username == username && admin.Password == password)
+                    if (reader.Read())
                     {
-                        admin.LastLogin = DateTime.Now;
-                        connection.Open();
-                        NpgsqlCommand cmd = new("UPDATE \"admin\" SET last_login = @last_login WHERE id = @id;", connection)
+                        admin = new Admin
                         {
-                            Parameters =
+                            Id = reader.GetGuid(reader.GetOrdinal("id")),
+                            Username = reader.GetString(reader.GetOrdinal("username")),
+                            Password = reader.GetString(reader.GetOrdinal("password")),
+                            LastLogin = reader.GetDateTime(reader.GetOrdinal("last_login")),
+                            IsSuperUser = reader.GetBoolean(reader.GetOrdinal("is_super_user")),
+                        };
+                    }
+                }
+
+                if (BC.EnhancedVerify(password, admin.Password))
+                {
+                    admin.LastLogin = DateTime.Now;
+                    NpgsqlCommand command = new("UPDATE \"admin\" SET last_login = @last_login WHERE id = @id;", connection)
+                    {
+                        Parameters =
                             {
                                 new("last_login", admin.LastLogin),
                                 new("id", admin.Id),
                             }
-                        };
-                        cmd.ExecuteNonQuery();
-                        connection.Close();
-                        return admin;
-                    }
+                    };
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    return true;
                 }
-                return null;
+
+                return false;
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while login.", ex);
             }
 
