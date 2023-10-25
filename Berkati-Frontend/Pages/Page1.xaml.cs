@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Berkati_Frontend.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace Berkati_Frontend.Pages
     /// </summary>
     public partial class Page1 : Page
     {
+        private DonaturViewModel _donaturViewModel;
         public Page1()
         {
             InitializeComponent();
+            _donaturViewModel = ((App)Application.Current).DonaturViewModel;
+            DonaturItemsControl.ItemsSource = _donaturViewModel.DonaturList;
         }
     }
 }
