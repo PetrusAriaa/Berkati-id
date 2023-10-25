@@ -76,6 +76,10 @@ namespace Berkati_Backend.Models
             }
             catch (Exception ex)
             {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
                 throw new Exception("Error occurred while retrieving requests.", ex);
             }
             finally
