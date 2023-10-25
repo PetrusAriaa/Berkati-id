@@ -31,12 +31,19 @@
             <!-- StackPanel untuk menyusun elemen-elemen UI di dalam card -->
             <StackPanel Orientation="Vertical" Margin="20">
                 <!-- Teks "Berkati" -->
-                <TextBlock Text="Berkati"
+                <!--<TextBlock Text="Berkati"
                            FontSize="27"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Top"
                            FontWeight="Bold"
-                           Margin="0,20,0,0"/>
+                           Margin="0,20,0,0"/>-->
+                <!-- Teks "Login" -->
+                <!-- Teks "Berkati" -->
+                <!-- Teks "Login" -->
+                <!-- Teks "Berkati" -->
+                <!-- Teks "Login" -->
+                <!-- Teks "Berkati" -->
+                <Image Source="./Assets/logo-full.png" Height="66" Width="122"/>
                 <!-- Teks "Login" -->
                 <TextBlock Text="Login"
                            FontSize="25"
@@ -86,19 +93,9 @@
                         Height="35"
                         Width="250"
                         Cursor="Hand" Click="LoginBtn_Click">
-                    <!-- Mengatur letak content dengan icon -->
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center">Login</TextBlock>
-                        <!-- Icon login -->
-                        <iconPacks:PackIconMaterial Kind="LoginVariant"
-                                                    Width="16"
-                                                    Height="16"
-                                                    Margin="5,0,0,0"
-                                                    VerticalAlignment="Center"/>
-                    </StackPanel>
                     <!-- Mengatur style dari Login button -->
                     <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
@@ -114,7 +111,7 @@
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <!-- Ubah efek bayangan saat tombol dihover -->
-                                                <Setter Property="Border.Effect">
+                                                <Setter Property="Effect">
                                                     <Setter.Value>
                                                         <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
                                                     </Setter.Value>
@@ -122,7 +119,7 @@
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
                                                 <!-- Ubah efek bayangan saat tombol diklik -->
-                                                <Setter Property="Border.Effect">
+                                                <Setter Property="Effect">
                                                     <Setter.Value>
                                                         <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
                                                     </Setter.Value>
@@ -134,6 +131,16 @@
                             </Setter>
                         </Style>
                     </Button.Style>
+                    <!-- Mengatur letak content dengan icon -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center"><Run Text="Login"/></TextBlock>
+                        <!-- Icon login -->
+                        <iconPacks:PackIconMaterial Kind="LoginVariant"
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
             </StackPanel>
         </materialDesign:Card>

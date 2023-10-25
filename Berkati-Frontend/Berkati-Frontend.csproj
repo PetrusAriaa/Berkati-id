@@ -24,4 +24,8 @@
     <Resource Include="Fonts\FaFreeSolid.otf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+
 </Project>
