@@ -18,7 +18,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- Logo Berkati -->
-        <Label  Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="25" Content= "&#x42;" FontFamily="{StaticResource FaFreeSolid}" FontSize="18"/>
+        <Image Source="/Assets/logo-kotak.png" Margin="5,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" />
+        <!--<Label  Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="25" Content= "&#x42;" FontFamily="{StaticResource FaFreeSolid}" FontSize="18"/>-->
         
         <!-- Menu -->
         <ListBox Grid.Column="0" SelectionMode="Single" SelectionChanged="sidebar_SelectionChanged" x:Name="sidebar" Margin="0,50,0,50"  BorderThickness="0">
@@ -37,7 +38,7 @@
                 Width="25" 
                 Foreground="White"
                 Background="White"
-                Cursor="Hand"/>
+                Cursor="Hand" Click="LogoutBtn_Click"/>
 
         <StackPanel Orientation="Horizontal">
             <!-- Icon logout -->

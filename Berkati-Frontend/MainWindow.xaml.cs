@@ -33,5 +33,12 @@ namespace Berkati_Frontend
             navframe.Navigate(selected.Navlink);
 
         }
+
+        private void LogoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new();
+            loginWindow.Show();
+            Close();
+        }
     }
 }

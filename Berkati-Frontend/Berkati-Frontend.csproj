@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\community-background.jpg" />
+    <None Remove="Assets\logo-full.png" />
+    <None Remove="Assets\logo-kotak.png" />
     <None Remove="Fonts\FaFreeSolid.otf" />
   </ItemGroup>
 
@@ -22,11 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\community-background.jpg" />
+    <Resource Include="Assets\logo-full.png" />
+    <Resource Include="Assets\logo-kotak.png" />
     <Resource Include="Fonts\FaFreeSolid.otf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\" />
   </ItemGroup>
 
 </Project>
