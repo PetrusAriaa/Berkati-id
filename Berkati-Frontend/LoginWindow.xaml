@@ -13,7 +13,7 @@
         Icon="/Assets/logo-kotak.png"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         WindowStartupLocation="CenterScreen">
-    
+
     <!-- Window Background -->
     <Window.Background>
         <ImageBrush ImageSource="/Assets/community-background.jpg" Stretch="Uniform" >
@@ -139,9 +139,10 @@
                     </Button.Style>
                     <!-- Mengatur letak content dengan icon -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center"><Run Text="Login"/></TextBlock>
+                        <TextBlock VerticalAlignment="Center"><Run x:Name="loginText" Text="Login"/></TextBlock>
                         <!-- Icon login -->
-                        <iconPacks:PackIconMaterial Kind="LoginVariant"
+                        <iconPacks:PackIconMaterial x:Name="loginIcon"
+                                                    Kind="LoginVariant"
                                                     Width="16"
                                                     Height="16"
                                                     Margin="5,0,0,0"

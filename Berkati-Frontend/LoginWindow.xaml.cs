@@ -34,6 +34,14 @@ namespace Berkati_Frontend
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             string apiUri = "https://localhost:7036/admin/login";
+            if (string.IsNullOrEmpty(unameInput.Text) || string.IsNullOrEmpty(passwordInput.Password.ToString()))
+            {
+                MessageBox.Show("Please insert username and password");
+                return;
+            }
+            loginText.Text = null;
+            loginIcon.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.ChartDonut;
+            loginIcon.Spin = true;
             string body = "{\"username\":\"" + unameInput.Text + "\",\"password\":\"" + passwordInput.Password.ToString() + "\"}";
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             try
@@ -52,6 +60,9 @@ namespace Berkati_Frontend
                     }
                     else
                     {
+                        loginText.Text = "Login";
+                        loginIcon.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.LoginVariant;
+                        loginIcon.Spin = false;
                         MessageBox.Show("Wrong Password");
                     }
                 }
