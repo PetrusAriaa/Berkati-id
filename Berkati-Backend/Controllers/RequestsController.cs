@@ -35,5 +35,67 @@ namespace Berkati_Backend.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("{userId}")]
+        public IActionResult GetByUserId([FromRoute]Guid userId)
+        {
+            try
+            {
+                List<Requests> _data = requests.GetRequestByUserId(userId);
+                var res = new
+                {
+                    data = _data,
+                    length = _data.Count,
+                    accessedAt = DateTime.UtcNow
+                };
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Requests _request)
+        {
+            try
+            {
+                Guid reqId = requests.AddRequest(_request);
+                return Created(reqId.ToString(), _request);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Requests _request)
+        {
+            try
+            {
+                requests.UpdateRequest(_request);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                requests.DeleteRequest(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

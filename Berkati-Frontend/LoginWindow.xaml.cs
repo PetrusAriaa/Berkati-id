@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Text.Json;
 using System.Windows.Navigation;
 
 public class LoginResponse
