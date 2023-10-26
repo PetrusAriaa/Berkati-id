@@ -17,14 +17,12 @@ using static Berkati_Frontend.Pages.Page3;
 
 namespace Berkati_Frontend.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page4.xaml
-    /// </summary>
     public partial class Page4 : Page
     {
         // Daftar objek untuk menampung data
         private ObservableCollection<PartnerData> partnerDataList;
-        private PartnerData selectedPartner; // Deklarasikan variabel untuk menyimpan item yang dipilih
+        // Mendeklarasikan variabel untuk menyimpan item yang dipilih
+        private PartnerData selectedPartner; 
         public Page4()
         {
             InitializeComponent();
@@ -60,7 +58,7 @@ namespace Berkati_Frontend.Pages
                 selectedPartner.Telepon = TeleponTextBox.Text;
                 selectedPartner.Email = EmailTextBox.Text;
 
-                // Perbarui DataGrid
+                // Memperbarui DataGrid
                 DataGrid.Items.Refresh();
 
                 // Mengatur nilai TextBoxes ke kosong jika tidak ada item yang dipilih
@@ -99,7 +97,7 @@ namespace Berkati_Frontend.Pages
 
                 NamaTextBox.Text = selectedPartner.Nama;
                 PenanggungJawabTextBox.Text = selectedPartner.PenanggungJawab;
-                TeleponTextBox.Text = selectedPartner.Telepon; // Ubah nilai integer ke string saat menampilkan di TextBox
+                TeleponTextBox.Text = selectedPartner.Telepon; 
                 EmailTextBox.Text = selectedPartner.Email;
 
                 // Mengatur DataGrid ke mode baca saja
@@ -112,7 +110,7 @@ namespace Berkati_Frontend.Pages
         {
             public string Nama { get; set; }
             public string PenanggungJawab { get; set; }
-            public string Telepon { get; set; } // Tipe data diubah menjadi int
+            public string Telepon { get; set; } 
             public string Email { get; set; }
         } 
     }

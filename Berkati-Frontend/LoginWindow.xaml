@@ -7,9 +7,14 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:Berkati_Frontend"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="550" Width="800"
+        Title="Berkati Login" 
+        Height="550" 
+        Width="800" 
+        Icon="/Assets/logo-kotak.png"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         WindowStartupLocation="CenterScreen">
+    
+    <!-- Window Background -->
     <Window.Background>
         <ImageBrush ImageSource="/Assets/community-background.jpg" Stretch="Uniform" >
             <ImageBrush.RelativeTransform>
@@ -41,13 +46,7 @@
             </materialDesign:Card.Effect>
             <!-- StackPanel untuk menyusun elemen-elemen UI di dalam card -->
             <StackPanel Orientation="Vertical" Margin="20">
-                <!-- Teks "Berkati" -->
-                <!-- Teks "Login" -->
-                <!-- Teks "Berkati" -->
-                <!-- Teks "Login" -->
-                <!-- Teks "Berkati" -->
-                <!-- Teks "Login" -->
-                <!-- Teks "Berkati" -->
+                <!-- Logo Berkati -->
                 <Image Source="/Assets/logo-full.png" Height="66" Width="122"/>
                 <!-- Teks "Login" -->
                 <TextBlock Text="Login"
@@ -95,7 +94,7 @@
                 <!-- Button Login -->
                 <Button x:Name="LoginBtn"
                         Foreground="White"
-                        Background="Black"
+                        Background="#F78838"
                         Margin="0,25"
                         Height="35"
                         Width="250"
@@ -110,25 +109,25 @@
                                                 CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center"
                                                               VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol dihover -->
+                                                <!-- Efek bayangan saat tombol dihover -->
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol diklik -->
+                                                <!-- Efek bayangan saat tombol diklik -->
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>

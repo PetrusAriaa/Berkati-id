@@ -15,14 +15,12 @@ using System.Windows.Shapes;
 
 namespace Berkati_Frontend
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            navframe.Navigate(new Uri("Pages/Page1.xaml", UriKind.Relative));
         }
 
         private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)

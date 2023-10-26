@@ -16,14 +16,12 @@ using System.Windows.Shapes;
 
 namespace Berkati_Frontend.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page3.xaml
-    /// </summary>
     public partial class Page3 : Page
     {
         // Daftar objek untuk menampung data
         private ObservableCollection<UserData> userDataList;
-        private UserData selectedUser; // Deklarasikan variabel untuk menyimpan item yang dipilih
+        // Mendeklarasikan variabel untuk menyimpan item yang dipilih
+        private UserData selectedUser; 
 
         public Page3()
         {
@@ -37,7 +35,7 @@ namespace Berkati_Frontend.Pages
         {
             // Mendapatkan nilai dari input
             string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
+            string password = PasswordTextBox.Text;
 
             // Menambahkan data ke daftar
             userDataList.Add(new UserData { Username = username, Password = password });
@@ -45,7 +43,7 @@ namespace Berkati_Frontend.Pages
 
             // Reset TextBoxes setelah menambahkan admin
             UsernameTextBox.Clear();
-            PasswordBox.Clear();
+            PasswordTextBox.Clear();
         }
 
         private void DeleteAdminBtn_Click(object sender, RoutedEventArgs e)
@@ -60,7 +58,7 @@ namespace Berkati_Frontend.Pages
 
                 // Reset TextBoxes setelah menghapus admin
                 UsernameTextBox.Clear();
-                PasswordBox.Clear();
+                PasswordTextBox.Clear();
             }
         }
 
@@ -73,7 +71,7 @@ namespace Berkati_Frontend.Pages
 
                 // Menampilkan nilai item yang dipilih di dalam inputan
                 UsernameTextBox.Text = selectedUser.Username;
-                PasswordBox.Password = selectedUser.Password;
+                PasswordTextBox.Text = selectedUser.Password;
 
                 // Mengatur DataGrid ke mode baca saja
                 DataGrid.IsReadOnly = true;
