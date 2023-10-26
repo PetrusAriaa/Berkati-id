@@ -193,6 +193,10 @@ namespace Berkati_Backend.Models
                         admin.LastLogin = reader.GetDateTime(reader.GetOrdinal("last_login"));
                         admin.IsSuperUser = reader.GetBoolean(reader.GetOrdinal("is_super_user"));
                     }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
                 if (BC.EnhancedVerify(password, admin.Password))
