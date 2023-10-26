@@ -24,8 +24,6 @@ namespace Berkati_Frontend.Pages
     public partial class Page3 : Page
     {
         // Daftar objek untuk menampung data
-        private ObservableCollection<UserData> userDataList;
-        private UserData selectedUser; // Deklarasikan variabel untuk menyimpan item yang dipilih
         private readonly HttpClient _httpClient = new();
 
         public Page3()
@@ -76,16 +74,27 @@ namespace Berkati_Frontend.Pages
         private void AddAdminBtn_Click(object sender, RoutedEventArgs e)
         {
             // Mendapatkan nilai dari input
-            Admin admin = new()
+            if (AddAdminBtn.Content == "Add")
             {
-                Username = UsernameTextBox.Text,
-                Password = PasswordBox.Password,
-            };
-            AddAdmin(admin);
+                Admin admin = new()
+                {
+                    Username = UsernameTextBox.Text,
+                    Password = PasswordBox.Password,
+                };
+                AddAdmin(admin);
 
-            // Reset TextBoxes setelah menambahkan admin
-            UsernameTextBox.Clear();
-            PasswordBox.Clear();
+                // Reset TextBoxes setelah menambahkan admin
+                UsernameTextBox.Clear();
+                PasswordBox.Clear();
+            }
+            else if (AddAdminBtn.Content == "Cancel")
+            {
+                UsernameTextBox.IsEnabled = true;
+                PasswordBox.IsEnabled = true;
+                UsernameTextBox.Clear();
+                PasswordBox.Clear();
+                AddAdminBtn.Content = "Add";
+            }
         }
         private async void DeleteAdmin(Admin admin)
         {
@@ -141,26 +150,28 @@ namespace Berkati_Frontend.Pages
 
                 // Mengatur DataGrid ke mode baca saja
                 DataGrid.IsReadOnly = true;
+                AddAdminBtn.Content = "Cancel";
             }
             else
             {
                 // Mengatur DataGrid ke mode aktif
                 DataGrid.IsReadOnly = false;
+                AddAdminBtn.Content = "Add";
             }
         }
 
         // Kelas untuk data pengguna
         public class Admin
         {
-            public Guid Id { get; set; }
-            public string Username { get; set; }
-            public string Password { get; set; }
-            public string IsSuperUser { get; set; }
-            public DateTime LastLogin { get; set; }
+            public Guid? Id { get; set; }
+            public string? Username { get; set; }
+            public string? Password { get; set; }
+            public string? IsSuperUser { get; set; }
+            public DateTime? LastLogin { get; set; }
         }
         public class UserData
         {
-            public List<Admin> Data { get; set; }
+            public List<Admin>? Data { get; set; }
         }
     }
 }
