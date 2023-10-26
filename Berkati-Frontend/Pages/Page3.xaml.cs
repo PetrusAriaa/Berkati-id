@@ -75,20 +75,20 @@ namespace Berkati_Frontend.Pages
                 Admin admin = new()
                 {
                     Username = UsernameTextBox.Text,
-                    Password = PasswordBox.Password,
+                    Password = PasswordTextBox.Text,
                 };
                 AddAdmin(admin);
 
                 // Reset TextBoxes setelah menambahkan admin
                 UsernameTextBox.Clear();
-                PasswordBox.Clear();
+                PasswordTextBox.Clear();
             }
             else if (AddAdminBtn.Content == "Cancel")
             {
                 UsernameTextBox.IsEnabled = true;
-                PasswordBox.IsEnabled = true;
+                PasswordTextBox.IsEnabled = true;
                 UsernameTextBox.Clear();
-                PasswordBox.Clear();
+                PasswordTextBox.Clear();
                 AddAdminBtn.Content = "Add";
             }
         }
@@ -127,9 +127,9 @@ namespace Berkati_Frontend.Pages
 
                 // Reset TextBoxes setelah menghapus admin
                 UsernameTextBox.Clear();
-                PasswordBox.Clear();
+                PasswordTextBox.Clear();
                 UsernameTextBox.IsEnabled = true;
-                PasswordBox.IsEnabled = true;
+                PasswordTextBox.IsEnabled = true;
             }
         }
 
@@ -142,9 +142,9 @@ namespace Berkati_Frontend.Pages
 
                 // Menampilkan nilai item yang dipilih di dalam inputan
                 UsernameTextBox.Text = selectedAdmin.Username;
-                PasswordBox.Password = "****";
+                PasswordTextBox.Text = "****";
                 UsernameTextBox.IsEnabled = false;
-                PasswordBox.IsEnabled = false;
+                PasswordTextBox.IsEnabled = false;
                 // Mengatur DataGrid ke mode baca saja
                 DataGrid.IsReadOnly = true;
                 AddAdminBtn.Content = "Cancel";
