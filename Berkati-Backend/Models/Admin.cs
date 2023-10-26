@@ -176,7 +176,7 @@ namespace Berkati_Backend.Models
         
         public bool Login(string username, string password)
         {
-            Admin admin = null;
+            Admin admin = new();
             try
             {
                 connection.Open();
@@ -187,14 +187,11 @@ namespace Berkati_Backend.Models
                 {
                     if (reader.Read())
                     {
-                        admin = new Admin
-                        {
-                            Id = reader.GetGuid(reader.GetOrdinal("id")),
-                            Username = reader.GetString(reader.GetOrdinal("username")),
-                            Password = reader.GetString(reader.GetOrdinal("password")),
-                            LastLogin = reader.GetDateTime(reader.GetOrdinal("last_login")),
-                            IsSuperUser = reader.GetBoolean(reader.GetOrdinal("is_super_user")),
-                        };
+                        admin.Id = reader.GetGuid(reader.GetOrdinal("id"));
+                        admin.Username = reader.GetString(reader.GetOrdinal("username"));
+                        admin.Password = reader.GetString(reader.GetOrdinal("password"));
+                        admin.LastLogin = reader.GetDateTime(reader.GetOrdinal("last_login"));
+                        admin.IsSuperUser = reader.GetBoolean(reader.GetOrdinal("is_super_user"));
                     }
                 }
 
@@ -226,8 +223,6 @@ namespace Berkati_Backend.Models
             }
 
         }
-
-
 
     }
 }
