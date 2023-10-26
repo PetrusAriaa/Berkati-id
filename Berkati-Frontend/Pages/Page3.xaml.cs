@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Berkati_Frontend.Pages
 {
@@ -24,28 +26,44 @@ namespace Berkati_Frontend.Pages
         // Daftar objek untuk menampung data
         private ObservableCollection<UserData> userDataList;
         private UserData selectedUser; // Deklarasikan variabel untuk menyimpan item yang dipilih
+        private readonly HttpClient _httpClient = new();
 
         public Page3()
         {
             InitializeComponent();
-            // Inisialisasi daftar data
-            userDataList = new ObservableCollection<UserData>();
-            DataGrid.ItemsSource = userDataList;
+            GetAdminData();
+        }
+        private async void GetAdminData()
+        {
+            var apiUri = "https://localhost:7036/admin";
+            try
+            {
+                HttpResponseMessage res = await _httpClient.GetAsync(apiUri);
+                if (res.IsSuccessStatusCode)
+                {
+                    var content = await res.Content.ReadAsStringAsync();
+                    var json = JsonConvert.DeserializeObject<UserData>(content);
+                    DataGrid.ItemsSource = json.Data;
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void AddAdminBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Mendapatkan nilai dari input
-            string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
+            //// Mendapatkan nilai dari input
+            //string username = UsernameTextBox.Text;
+            //string password = PasswordBox.Password;
 
-            // Menambahkan data ke daftar
-            userDataList.Add(new UserData { Username = username, Password = password });
+            //// Menambahkan data ke daftar
+            //userDataList.Add(new UserData { Username = username, Password = password });
 
 
-            // Reset TextBoxes setelah menambahkan admin
-            UsernameTextBox.Clear();
-            PasswordBox.Clear();
+            //// Reset TextBoxes setelah menambahkan admin
+            //UsernameTextBox.Clear();
+            //PasswordBox.Clear();
         }
 
         private void DeleteAdminBtn_Click(object sender, RoutedEventArgs e)
@@ -69,11 +87,13 @@ namespace Berkati_Frontend.Pages
             if (DataGrid.SelectedItem != null)
             {
                 // Mengambil item yang dipilih dari DataGrid
-                UserData selectedUser = (UserData)DataGrid.SelectedItem;
+                Admin selectedAdmin = (Admin)DataGrid.SelectedItem;
 
                 // Menampilkan nilai item yang dipilih di dalam inputan
-                UsernameTextBox.Text = selectedUser.Username;
-                PasswordBox.Password = selectedUser.Password;
+                UsernameTextBox.Text = selectedAdmin.Username;
+                PasswordBox.Password = "****";
+                UsernameTextBox.IsEnabled = false;
+                PasswordBox.IsEnabled = false;
 
                 // Mengatur DataGrid ke mode baca saja
                 DataGrid.IsReadOnly = true;
@@ -86,10 +106,17 @@ namespace Berkati_Frontend.Pages
         }
 
         // Kelas untuk data pengguna
-        public class UserData
+        public class Admin
         {
+            public Guid Id { get; set; }
             public string Username { get; set; }
             public string Password { get; set; }
+            public string IsSuperUser { get; set; }
+            public DateTime LastLogin { get; set; }
+        }
+        public class UserData
+        {
+            public List<Admin> Data { get; set; }
         }
     }
 }
