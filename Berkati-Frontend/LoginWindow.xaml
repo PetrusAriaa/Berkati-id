@@ -9,8 +9,19 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="550" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="White"
         WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="/Assets/community-background.jpg" Stretch="Uniform" >
+            <ImageBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1.25" ScaleY="1.25"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ImageBrush.RelativeTransform>
+        </ImageBrush>
+    </Window.Background>
     <!-- Grid untuk mengatur susunan UI -->
     <Grid>
         <!-- Row Definition: Mengatur tinggi baris sesuai kebutuhan -->
@@ -31,19 +42,13 @@
             <!-- StackPanel untuk menyusun elemen-elemen UI di dalam card -->
             <StackPanel Orientation="Vertical" Margin="20">
                 <!-- Teks "Berkati" -->
-                <!--<TextBlock Text="Berkati"
-                           FontSize="27"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Top"
-                           FontWeight="Bold"
-                           Margin="0,20,0,0"/>-->
                 <!-- Teks "Login" -->
                 <!-- Teks "Berkati" -->
                 <!-- Teks "Login" -->
                 <!-- Teks "Berkati" -->
                 <!-- Teks "Login" -->
                 <!-- Teks "Berkati" -->
-                <Image Source="./Assets/logo-full.png" Height="66" Width="122"/>
+                <Image Source="/Assets/logo-full.png" Height="66" Width="122"/>
                 <!-- Teks "Login" -->
                 <TextBlock Text="Login"
                            FontSize="25"
