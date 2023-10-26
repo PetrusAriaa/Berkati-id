@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
+public class LoginBody
+{
+    public string Username { get; set; }
+    public string Password { get; set; }
+}
+
 namespace Berkati_Backend.Controllers
 {
     [EnableCors("AllowSpecificOrigin")]
@@ -82,33 +88,21 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] JsonElement requestBody)
+        public IActionResult Login([FromBody] LoginBody data)
         {
             try
             {
-                if (requestBody.TryGetProperty("username", out var usernameProperty) && requestBody.TryGetProperty("password", out var passwordProperty))
+                if(string.IsNullOrEmpty(data.Username) || string.IsNullOrEmpty(data.Password))
                 {
-                    string username = usernameProperty.GetString();
-                    string password = passwordProperty.GetString();
-
-                    if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-                    {
-                        return BadRequest("Invalid login request.");
-                    }
-
-                    bool isLogin = admins.Login(username, password);
-                    var res = new
-                    {
-                        data = isLogin,
-                        accessedAt = DateTime.UtcNow
-                    };
-                    return Ok(res);
+                    return BadRequest("Invalid login request.");
                 }
-                else
+                bool isLogin = admins.Login(data.Username, data.Password);
+                var res = new
                 {
-                    return BadRequest("Invalid login request format.");
-                }
-                
+                    data = isLogin,
+                    accessedAt = DateTime.UtcNow
+                };
+                return Ok(res);
             }
             catch (Exception ex)
             {

@@ -36,6 +36,29 @@ namespace Berkati_Backend.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                Partner _data = partners.GetPartnerById(id);
+                if ( _data == null )
+                {
+                    return NotFound($"Partner with ID {id} is not found.");
+                }
+                var res = new
+                {
+                    data = _data,
+                    accessedAt = DateTime.UtcNow
+                };
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] Partner partner)
         {
@@ -51,7 +74,7 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, Partner partner)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]Partner partner)
         {
             try
             {
@@ -66,7 +89,7 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete([FromRoute]Guid id)
         {
             try
             {
