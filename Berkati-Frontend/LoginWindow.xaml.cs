@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Windows.Navigation;
 
 public class LoginResponse
 {
@@ -21,9 +22,6 @@ public class LoginResponse
 }
 namespace Berkati_Frontend
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         public LoginWindow()

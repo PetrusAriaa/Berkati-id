@@ -18,14 +18,9 @@ using Newtonsoft.Json;
 
 namespace Berkati_Frontend.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page3.xaml
-    /// </summary>
     public partial class Page3 : Page
     {
-        // Daftar objek untuk menampung data
         private readonly HttpClient _httpClient = new();
-
         public Page3()
         {
             InitializeComponent();
@@ -71,9 +66,10 @@ namespace Berkati_Frontend.Pages
                 Console.WriteLine(ex.Message);
             }
         }
+        
         private void AddAdminBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Mendapatkan nilai dari input
+
             if (AddAdminBtn.Content == "Add")
             {
                 Admin admin = new()
@@ -96,6 +92,7 @@ namespace Berkati_Frontend.Pages
                 AddAdminBtn.Content = "Add";
             }
         }
+        
         private async void DeleteAdmin(Admin admin)
         {
             var apiUri = "https://localhost:7036/admin/"+admin.Id;
@@ -117,6 +114,7 @@ namespace Berkati_Frontend.Pages
                 Console.WriteLine(ex.Message);
             }
         }
+        
         private void DeleteAdminBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DataGrid.SelectedItem != null)
@@ -147,7 +145,6 @@ namespace Berkati_Frontend.Pages
                 PasswordBox.Password = "****";
                 UsernameTextBox.IsEnabled = false;
                 PasswordBox.IsEnabled = false;
-
                 // Mengatur DataGrid ke mode baca saja
                 DataGrid.IsReadOnly = true;
                 AddAdminBtn.Content = "Cancel";
