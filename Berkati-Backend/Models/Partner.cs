@@ -59,7 +59,7 @@ namespace Berkati_Backend.Models
                 {
                     throw new Exception("Database-related error occured.", ex);
                 }
-                throw new Exception("Error occurred while retrieving partners.", ex); ;
+                throw new Exception("Error occurred while retrieving partners.", ex);
 
             }
             finally
@@ -67,6 +67,45 @@ namespace Berkati_Backend.Models
                 connection.Close();
             }
             return ListPartner;
+        }
+
+        public Partner GetPartnerById(Guid id)
+        {
+            Partner partner = new();
+            try
+            {
+                connection.Open();
+                NpgsqlCommand cmd = new("SELECT * FROM \"partner\" WHERE id = @id;", connection);
+                cmd.Parameters.AddWithValue("id", id);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        partner = new Partner
+                        {
+                            Id = reader.GetGuid(reader.GetOrdinal("id")),
+                            Nama = reader.GetString(reader.GetOrdinal("nama")),
+                            PenanggungJawab = reader.GetString(reader.GetOrdinal("penanggung_jawab")),
+                            Telp = reader.GetString(reader.GetOrdinal("telp")),
+                            Email = reader.GetString(reader.GetOrdinal("email")),
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occured.", ex);
+                }
+                throw new Exception("Error occurred while retrieving partner.", ex);
+            }
+            finally 
+            {
+                connection.Close();
+            }
+            return partner;
         }
 
         public Guid AddPartner(Partner partner)
@@ -122,7 +161,6 @@ namespace Berkati_Backend.Models
                     }
                 };
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception ex)
             {
