@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Text.Json;
 
 public class LoginResponse
 {
@@ -41,30 +40,27 @@ namespace Berkati_Frontend
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             try
             {
-                //HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
-                //if (res.IsSuccessStatusCode)
-                //{
-                //    string _res = await res.Content.ReadAsStringAsync();
+                HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
+                if (res.IsSuccessStatusCode)
+                {
+                    string _res = await res.Content.ReadAsStringAsync();
 
-                //    var json = JsonConvert.DeserializeObject<LoginResponse>(_res);
-                //    if (json.Data)
-                //    {
-                //        MainWindow mainWindow = new();
-                //        mainWindow.Show();
-                //        Close();
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Wrong Password");
-                //    }
-                //}
-                //else
-                //{
-                //    Console.WriteLine("SWW");
-                //}
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                Close();
+                    var json = JsonConvert.DeserializeObject<LoginResponse>(_res);
+                    if (json.Data)
+                    {
+                        MainWindow mainWindow = new();
+                        mainWindow.Show();
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong Password");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("SWW");
+                }
             }
             catch (Exception ex)
             {

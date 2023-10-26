@@ -50,35 +50,79 @@ namespace Berkati_Frontend.Pages
                 Console.WriteLine(ex.Message);
             }
         }
-
+        private async void AddAdmin(Admin admin)
+        {
+            var apiUri = "https://localhost:7036/admin";
+            string body = "{\"username\":\"" + admin.Username + "\",\"password\":\"" + admin.Password+ "\"}";
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
+            try
+            {
+                HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
+                if (res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Berhasil menambahkan admin");
+                    GetAdminData();
+                }
+                else
+                {
+                    MessageBox.Show("Gagal menambahkan admin");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         private void AddAdminBtn_Click(object sender, RoutedEventArgs e)
         {
-            //// Mendapatkan nilai dari input
-            //string username = UsernameTextBox.Text;
-            //string password = PasswordBox.Password;
+            // Mendapatkan nilai dari input
+            Admin admin = new()
+            {
+                Username = UsernameTextBox.Text,
+                Password = PasswordBox.Password,
+            };
+            AddAdmin(admin);
 
-            //// Menambahkan data ke daftar
-            //userDataList.Add(new UserData { Username = username, Password = password });
-
-
-            //// Reset TextBoxes setelah menambahkan admin
-            //UsernameTextBox.Clear();
-            //PasswordBox.Clear();
+            // Reset TextBoxes setelah menambahkan admin
+            UsernameTextBox.Clear();
+            PasswordBox.Clear();
         }
-
+        private async void DeleteAdmin(Admin admin)
+        {
+            var apiUri = "https://localhost:7036/admin/"+admin.Id;
+            try
+            {
+                HttpResponseMessage res = await _httpClient.DeleteAsync(apiUri);
+                if (res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Berhasil menghapus admin");
+                    GetAdminData();
+                }
+                else
+                {
+                    MessageBox.Show("Gagal menghapus admin");
+                }
+            }
+            catch (Exception ex)
+            { 
+                Console.WriteLine(ex.Message);
+            }
+        }
         private void DeleteAdminBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DataGrid.SelectedItem != null)
             {
                 // Mengambil item yang dipilih dari DataGrid
-                UserData selectedUser = (UserData)DataGrid.SelectedItem;
+                Admin admin = (Admin)DataGrid.SelectedItem;
 
                 // Menghapus item yang dipilih dari daftar
-                userDataList.Remove(selectedUser);
+                DeleteAdmin(admin);
 
                 // Reset TextBoxes setelah menghapus admin
                 UsernameTextBox.Clear();
                 PasswordBox.Clear();
+                UsernameTextBox.IsEnabled = true;
+                PasswordBox.IsEnabled = true;
             }
         }
 
