@@ -19,7 +19,7 @@ namespace Berkati_Backend.Models
         private string provinsi;
         private string kodepos;
         private int est_jumlah;
-        private string status;
+        private string? status;
 
         public Guid Id { get => _id; set => _id = value; }
         public Guid UserId { get => _userId; set => _userId = value; }
@@ -33,7 +33,7 @@ namespace Berkati_Backend.Models
         public string Provinsi { get => provinsi; set => provinsi = value; }
         public string Kodepos { get => kodepos; set => kodepos = value; }
         public int Est_jumlah { get => est_jumlah; set => est_jumlah = value; }
-        public string Status { get => status; set => status = value; }
+        public string? Status { get => status; set => status = value; }
 
 
         private readonly NpgsqlConnection connection;
@@ -79,7 +79,6 @@ namespace Berkati_Backend.Models
             {
                 if (ex is NpgsqlException)
                 {
-                    Console.WriteLine(ex.Message);
                     throw new Exception("Database-related error occurred.", ex);
                 }
                 throw new Exception("Error occurred while retrieving requests.", ex);
@@ -172,8 +171,9 @@ namespace Berkati_Backend.Models
             {
                 if (ex is NpgsqlException)
                 {
-                    throw new Exception("Database-related error occurred.", ex);
+                    throw new Exception("Database-related error occurred while creating request.", ex);
                 }
+                Console.WriteLine(ex.Message);
                 throw new Exception("Error occurred while creating request.", ex);
             }
             finally

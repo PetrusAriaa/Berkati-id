@@ -36,6 +36,7 @@ namespace Berkati_Backend.Controllers
             }
         }
 
+        // BUAT TAMPILAN LIST BERBAGI PAKAI INI YA :D
         [HttpGet("requests")]
         public IActionResult GetUserRequest()
         {

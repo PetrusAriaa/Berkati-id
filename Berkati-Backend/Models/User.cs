@@ -1,6 +1,7 @@
 ﻿using Npgsql.Internal.TypeHandlers;
 using DotNetEnv;
 using Npgsql;
+using Sprache;
 
 namespace Berkati_Backend.Models
 {
@@ -9,13 +10,11 @@ namespace Berkati_Backend.Models
         private Guid _id;
         private string nama;
         private string telp;
-        //private string? _reqID;
         private List<Requests>? requests;
 
         public Guid Id { get => _id; set => _id = value; }
         public string Nama { get => nama; set => nama = value; }
         public string Telp { get => telp; set => telp = value; }
-        //public string? ReqID { get => _reqID; set => _reqID = value; }
         public List<Requests>? Requests { get => requests; set => requests = value; }
 
         private readonly NpgsqlConnection connection;
@@ -68,24 +67,42 @@ namespace Berkati_Backend.Models
         {
             try
             {
-                connection.Open();
-                user.Id = Guid.NewGuid();
-                NpgsqlCommand cmd = new("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
+                Guid? userId = CheckUser(user.Nama, user.Telp);
+
+                if (!userId.HasValue)
                 {
-                    Parameters =
+                    connection.Open();
+                    user.Id = Guid.NewGuid();
+                    NpgsqlCommand cmd = new("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
                     {
-                        new("id", user.Id),
-                        new("nama", user.Nama),
-                        new("telp", user.Telp)
-                    }
-                };
-                cmd.ExecuteNonQuery();
-            }
+                        Parameters =
+                        {
+                            new("id", user.Id),
+                            new("nama", user.Nama),
+                            new("telp", user.Telp)
+                        }
+                    };
+                    cmd.ExecuteNonQuery();
+                } 
+                else
+                {
+                    user.Id = userId.Value;
+                }
+
+                Requests _request = new();
+                foreach (var request in user.Requests)
+                {
+
+                    request.UserId = user.Id;
+                    Guid ids = _request.AddRequest(request);
+                }
+
+             }
             catch (Exception ex)
             {
                 if (ex is NpgsqlException)
                 {
-                    throw new Exception("Database-related error occurred.", ex);
+                    throw new Exception("Database-related error occurred while creating user.", ex);
                 }
                 throw new Exception("Error occurred while creating user.", ex);
             }
@@ -99,6 +116,7 @@ namespace Berkati_Backend.Models
         {
             try
             {
+
                 connection.Open();
                 NpgsqlCommand cmd = new("DELETE FROM \"user\" WHERE id = @id;", connection)
                 {
@@ -147,6 +165,39 @@ namespace Berkati_Backend.Models
                     throw new Exception("Database-related error occurred.", ex);
                 }
                 throw new Exception("Error occurred while updating user.", ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public Guid? CheckUser(string nama, string telp)
+        {
+            Guid? result = null;
+            try
+            {
+                connection.Open();
+                NpgsqlCommand cmd = new("SELECT id FROM \"user\" WHERE nama=@nama AND telp=@telp;", connection);
+                cmd.Parameters.AddWithValue("nama", nama);
+                cmd.Parameters.AddWithValue("telp", telp);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        result = reader.GetGuid(reader.GetOrdinal("id"));
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred while checking user.", ex);
+                }
+                throw new Exception("Error occurred while checking user.", ex);
             }
             finally
             {
