@@ -10,41 +10,40 @@
       Title="Page4">
 
     <DockPanel VerticalAlignment="Stretch">
-        <!-- TULISAN "ADD LIST" DI TENGAH PALING ATAS -->
+        <!-- Teks "MANAGE PARTNER" -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
-            <TextBlock Text="Manage Partner" Margin="10" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="MANAGE PARTNER" Margin="10" FontSize="24" FontWeight="Bold"/>
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-
-            <!-- Form untuk input data -->
+            <!-- Area input data -->
             <StackPanel Grid.Column="0" Margin="20">
+                <!-- Nama -->
                 <TextBlock Text="Nama:"/>
-                <TextBox x:Name="NamaTextBox" Margin="0,0,0,10" Padding="5" MaxLength="50" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Nama"/>
-
+                <TextBox x:Name="NamaTextBox" Margin="0,0,0,10" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Nama"/>
+                <!-- Penanggung Jawab -->
                 <TextBlock Text="Penanggung Jawab:"/>
-                <TextBox x:Name="PenanggungJawabTextBox" Margin="0,0,0,10" Padding="5" MaxLength="50" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Penanggung Jawab"/>
-
+                <TextBox x:Name="PenanggungJawabTextBox" Margin="0,0,0,10" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Penanggung Jawab"/>
+                <!-- Telepon -->
                 <TextBlock Text="Telepon:"/>
                 <TextBox x:Name="TeleponTextBox" Margin="0,0,0,10" Padding="5" MaxLength="15" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Telepon"/>
-
+                <!-- Email -->
                 <TextBlock Text="Email:"/>
                 <TextBox x:Name="EmailTextBox" Margin="0,0,0,10" Padding="5" MaxLength="50" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Email"/>
             </StackPanel>
-
+            <!-- Tata Letak Button-->
             <StackPanel HorizontalAlignment="Center">
-                <!-- Add Button -->
+                <!-- Button Add-->
                 <Button x:Name="AddPartnerBtn"
                         Foreground="White"
-                        Background="Black"
+                        Background="#F78838"
                         Margin="0,240,10,10"
                         Height="35"
                         Width="150"
-                        Cursor="Hand" 
-                        Grid.Row="8" 
+                        Cursor="Hand"  
                         Content="Add" 
                         VerticalAlignment="Center" 
                         HorizontalAlignment="Center" Click="AddPartnerBtn_Click">
@@ -56,24 +55,24 @@
                                         <Border x:Name="AddPartnerBorder" Background="{TemplateBinding Background}" CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol dihover -->
+                                                <!-- Efek bayangan saat tombol dihover -->
                                                 <Setter TargetName="AddPartnerBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol diklik -->
+                                                <!-- Efek bayangan saat tombol diklik -->
                                                 <Setter TargetName="AddPartnerBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
@@ -84,18 +83,17 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <!-- Edit Button -->
+                <!-- Button Edit -->
                 <Button x:Name="EditPartnerBtn"
-                    Foreground="White"
-                    Background="Black"
-                    Margin="0,10,10,10"
-                    Height="35"
-                    Width="150"
-                    Cursor="Hand" 
-                    Content="Edit" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center" Click="EditPartnerBtn_Click">
-
+                        Foreground="White"
+                        Background="#F78838"
+                        Margin="0,10,10,10"
+                        Height="35"
+                        Width="150"
+                        Cursor="Hand" 
+                        Content="Edit" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" Click="EditPartnerBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                             <Setter Property="Template">
@@ -104,24 +102,24 @@
                                         <Border x:Name="EditPartnerBorder" Background="{TemplateBinding Background}" CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol dihover -->
+                                                <!-- Efek bayangan saat tombol dihover -->
                                                 <Setter TargetName="EditPartnerBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol diklik -->
+                                                <!-- Efek bayangan saat tombol diklik -->
                                                 <Setter TargetName="EditPartnerBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
@@ -132,18 +130,17 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <!-- Delete Button -->
+                <!-- Button Delete -->
                 <Button x:Name="DeletePartnerBtn"
-                    Foreground="White"
-                    Background="Black"
-                    Margin="0,10,10,10"
-                    Height="35"
-                    Width="150"
-                    Cursor="Hand" 
-                    Content="Delete" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center" Click="DeletePartnerBtn_Click">
-
+                        Foreground="White"
+                        Background="#F78838"
+                        Margin="0,10,10,10"
+                        Height="35"
+                        Width="150"
+                        Cursor="Hand" 
+                        Content="Delete" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" Click="DeletePartnerBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                             <Setter Property="Template">
@@ -152,24 +149,24 @@
                                         <Border x:Name="DeletePartnerBorder" Background="{TemplateBinding Background}" CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol dihover -->
+                                                <!-- Efek bayangan saat tombol dihover -->
                                                 <Setter TargetName="DeletePartnerBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol diklik -->
+                                                <!-- Efek bayangan saat tombol diklik -->
                                                 <Setter TargetName="DeletePartnerBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
@@ -181,7 +178,7 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
-
+            <!-- Datagrid -->
             <DataGrid x:Name="DataGrid" ItemsSource="{Binding partnerDataList}" SelectionChanged="DataGrid_SelectionChanged" Grid.Column="1" AutoGenerateColumns="False" Margin="20" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nama" Binding="{Binding Nama}" Width="*"/>

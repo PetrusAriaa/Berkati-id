@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Text.Json;
+using System.Windows.Navigation;
 
 public class LoginResponse
 {
@@ -22,9 +22,6 @@ public class LoginResponse
 }
 namespace Berkati_Frontend
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         public LoginWindow()
@@ -37,34 +34,42 @@ namespace Berkati_Frontend
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             string apiUri = "https://localhost:7036/admin/login";
+            if (string.IsNullOrEmpty(unameInput.Text) || string.IsNullOrEmpty(passwordInput.Password.ToString()))
+            {
+                MessageBox.Show("Please insert username and password");
+                return;
+            }
+            loginText.Text = null;
+            loginIcon.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.ChartDonut;
+            loginIcon.Spin = true;
             string body = "{\"username\":\"" + unameInput.Text + "\",\"password\":\"" + passwordInput.Password.ToString() + "\"}";
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             try
             {
-                //HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
-                //if (res.IsSuccessStatusCode)
-                //{
-                //    string _res = await res.Content.ReadAsStringAsync();
+                HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
+                if (res.IsSuccessStatusCode)
+                {
+                    string _res = await res.Content.ReadAsStringAsync();
 
-                //    var json = JsonConvert.DeserializeObject<LoginResponse>(_res);
-                //    if (json.Data)
-                //    {
-                //        MainWindow mainWindow = new();
-                //        mainWindow.Show();
-                //        Close();
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Wrong Password");
-                //    }
-                //}
-                //else
-                //{
-                //    Console.WriteLine("SWW");
-                //}
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                Close();
+                    var json = JsonConvert.DeserializeObject<LoginResponse>(_res);
+                    if (json.Data)
+                    {
+                        MainWindow mainWindow = new();
+                        mainWindow.Show();
+                        Close();
+                    }
+                    else
+                    {
+                        loginText.Text = "Login";
+                        loginIcon.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.LoginVariant;
+                        loginIcon.Spin = false;
+                        MessageBox.Show("Wrong Password");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("SWW");
+                }
             }
             catch (Exception ex)
             {

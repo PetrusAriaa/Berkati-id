@@ -9,13 +9,12 @@
       Title="Page1">
 
     <DockPanel>
-        <!-- TULISAN "ADD LIST" DI BAWAH PALING BAWAH -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
             <!-- Teks "LIST BERBAGI" -->
             <TextBlock Text="LIST BERBAGI" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,10" />
         </StackPanel>
         <Grid>
-            <!-- ItemsControl dengan tata letak kartu (WrapPanel) -->
+            <!-- ItemsControl dengan tata letak card (WrapPanel) -->
             <ItemsControl x:Name="DonaturItemsControl">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -25,32 +24,122 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Gray" BorderThickness="1" Margin="5">
-                            <!-- Konten Kartu (Card Content) -->
+                            <!-- Card Content -->
                             <StackPanel Margin="10">
-                                <TextBlock Text="{Binding Nama}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBox Text="{Binding Nama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Jenis:" Width="60" Margin="5" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Jenis}" Margin="5"/>
+                                    <TextBlock Text="Telepon:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBox Text="{Binding Telepon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Jumlah:" Width="60" Margin="5" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Jumlah}" Margin="5"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Satuan:" Width="60" Margin="5" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Satuan}" Margin="5"/>
+                                    <TextBlock Text="Porsi:" Width="60" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBox Text="{Binding Jumlah, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Alamat:" Width="60" Margin="5" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Alamat}" Margin="5"/>
+                                    <TextBox Text="{Binding Alamat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Tanggal:" Width="60" Margin="5" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Tanggal, StringFormat=dd/MM/yyyy}" Margin="5"/>
+                                    <TextBox Text="{Binding Tanggal, StringFormat=dd/MM/yyyy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Waktu:" Width="60" Margin="5" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Jam}" Margin="5"/>
+                                    <TextBox Text="{Binding Jam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <!-- Button Edit -->
+                                <Button x:Name="EditListBtn"
+                                        Foreground="White"
+                                        Background="#F78838"
+                                        Margin="5"
+                                        Width="60"
+                                        Cursor="Hand" 
+                                        Content="Edit" 
+                                        Command="{Binding EditCommand}" 
+                                        CommandParameter="{Binding}" Click="EditListButton_Click"> 
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border x:Name="EditListBorder" Background="{TemplateBinding Background}" CornerRadius="16">
+                                                            <Border.Effect>
+                                                                <!-- Efek bayangan menggunakan DropShadowEffect -->
+                                                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
+                                                            </Border.Effect>
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <!-- Efek bayangan saat tombol dihover -->
+                                                                <Setter TargetName="EditListBorder" Property="Effect">
+                                                                    <Setter.Value>
+                                                                            <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <!-- Efek bayangan saat tombol diklik -->
+                                                                <Setter TargetName="EditListBorder" Property="Effect">
+                                                                    <Setter.Value>
+                                                                            <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- Button Delete -->
+                                <Button x:Name="DeleteListBtn"
+                                        Foreground="White"
+                                        Background="#F78838"
+                                        Margin="5"
+                                        Width="60"
+                                        Cursor="Hand" 
+                                        Content="Delete" 
+                                        Command="{Binding DeleteCommand}" 
+                                        CommandParameter="{Binding}" Click="DeleteListButton_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border x:Name="DeleteListBorder" Background="{TemplateBinding Background}" CornerRadius="16">
+                                                            <Border.Effect>
+                                                                <!-- Efek bayangan menggunakan DropShadowEffect -->
+                                                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
+                                                            </Border.Effect>
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <!-- Efek bayangan saat tombol dihover -->
+                                                                <Setter TargetName="DeleteListBorder" Property="Effect">
+                                                                    <Setter.Value>
+                                                                            <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <!-- Efek bayangan saat tombol diklik -->
+                                                                <Setter TargetName="DeleteListBorder" Property="Effect">
+                                                                    <Setter.Value>
+                                                                            <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 </StackPanel>
                             </StackPanel>
                         </Border>

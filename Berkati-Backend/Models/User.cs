@@ -10,13 +10,13 @@ namespace Berkati_Backend.Models
         private string nama;
         private string telp;
         //private string? _reqID;
-        //private List<UserRequests>? requests;
+        private List<Requests>? requests;
 
         public Guid Id { get => _id; set => _id = value; }
         public string Nama { get => nama; set => nama = value; }
         public string Telp { get => telp; set => telp = value; }
         //public string? ReqID { get => _reqID; set => _reqID = value; }
-        //public List<UserRequests>? Requests { get => requests; set => requests = value; }
+        public List<Requests>? Requests { get => requests; set => requests = value; }
 
         private readonly NpgsqlConnection connection;
 
@@ -44,7 +44,8 @@ namespace Berkati_Backend.Models
                         Nama = reader.GetString(reader.GetOrdinal("nama")),
                         Telp = reader.GetString(reader.GetOrdinal("telp")),
                     };
-
+                    Requests _request = new();
+                    user.Requests = _request.GetRequestByUserId(user.Id);
                     ListUser.Add(user);
                 }
             }

@@ -10,29 +10,30 @@
       Title="Page3">
 
     <DockPanel VerticalAlignment="Stretch">
-        <!-- TULISAN "ADD LIST" DI TENGAH PALING ATAS -->
-        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
-            <TextBlock Text="Manage Admin" Margin="10" FontSize="24" FontWeight="Bold"/>
-        </StackPanel>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Form untuk input data -->
-        <StackPanel Grid.Column="0" Margin="20">
-            <TextBlock Text="User Name:"/>
-            <TextBox x:Name="UsernameTextBox" Margin="0,0,0,10" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input User Name"/>
-
-            <TextBlock Text="Password:"/>
-            <PasswordBox x:Name="PasswordBox" Margin="0,0,0,10" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Password"/>
-        </StackPanel>
-
-        <StackPanel HorizontalAlignment="Center">
-            <Button x:Name="AddAdminBtn"
+            <!-- Teks "MANAGE ADMIN" -->
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+                <TextBlock Text="MANAGE ADMIN" Margin="10" FontSize="24" FontWeight="Bold"/>
+            </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Area input data -->
+            <StackPanel Grid.Column="0" Margin="20">
+                <!-- User name -->
+                <TextBlock Text="User Name:"/>
+                <TextBox x:Name="UsernameTextBox" Margin="0,0,0,10" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input User Name"/>
+                <!-- Password -->
+                <TextBlock Text="Password:"/>
+                <TextBox x:Name="PasswordTextBox" Margin="0,0,0,10" Padding="5" MaxLength="16" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch" materialDesign:HintAssist.Hint="Input Password"/>
+            </StackPanel>
+            <!-- Tata letak button -->
+            <StackPanel HorizontalAlignment="Center">
+                <!-- Button Add -->
+                <Button x:Name="AddAdminBtn"
                         Foreground="White"
-                        Background="Black"
+                        Background="#F78838"
                         Margin="0,200,10,10"
                         Height="35"
                         Width="150"
@@ -41,53 +42,53 @@
                         Content="Add" 
                         VerticalAlignment="Center" 
                         HorizontalAlignment="Center" Click="AddAdminBtn_Click">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="AddAdminBorder" Background="{TemplateBinding Background}" CornerRadius="16">
-                                        <Border.Effect>
-                                            <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
-                                        </Border.Effect>
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <!-- Ubah efek bayangan saat tombol dihover -->
-                                            <Setter TargetName="AddAdminBorder" Property="Effect">
-                                                <Setter.Value>
-                                                    <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <!-- Ubah efek bayangan saat tombol diklik -->
-                                            <Setter TargetName="AddAdminBorder" Property="Effect">
-                                                <Setter.Value>
-                                                    <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button x:Name="DeleteAdminBtn"
-                    Foreground="White"
-                    Background="Black"
-                    Margin="0,10,10,10"
-                    Height="35"
-                    Width="150"
-                    Cursor="Hand" 
-                    Content="Delete" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center" Click="DeleteAdminBtn_Click">
-                
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="AddAdminBorder" Background="{TemplateBinding Background}" CornerRadius="16">
+                                            <Border.Effect>
+                                                <!-- Efek bayangan menggunakan DropShadowEffect -->
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
+                                            </Border.Effect>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <!-- Efek bayangan saat tombol dihover -->
+                                                <Setter TargetName="AddAdminBorder" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <!-- Efek bayangan saat tombol diklik -->
+                                                <Setter TargetName="AddAdminBorder" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <!-- Button Delete -->
+                <Button x:Name="DeleteAdminBtn"
+                        Foreground="White"
+                        Background="#F78838"
+                        Margin="0,10,10,10"
+                        Height="35"
+                        Width="150"
+                        Cursor="Hand" 
+                        Content="Delete" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" Click="DeleteAdminBtn_Click">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                             <Setter Property="Template">
@@ -96,24 +97,24 @@
                                         <Border x:Name="DeleteAdminBorder" Background="{TemplateBinding Background}" CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol dihover -->
+                                                <!-- Efek bayangan saat tombol dihover -->
                                                 <Setter TargetName="DeleteAdminBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="10" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
-                                                <!-- Ubah efek bayangan saat tombol diklik -->
+                                                <!-- Efek bayangan saat tombol diklik -->
                                                 <Setter TargetName="DeleteAdminBorder" Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="Black" Opacity="0.7"/>
+                                                        <DropShadowEffect ShadowDepth="3" BlurRadius="5" Color="#F78838" Opacity="0.7"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Trigger>
@@ -125,14 +126,13 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
-
+            <!-- Datagrid -->
             <DataGrid x:Name="DataGrid" ItemsSource="{Binding userDataList}" SelectionChanged="DataGrid_SelectionChanged" Grid.Column="1" AutoGenerateColumns="False" Margin="20" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
                     <DataGridTextColumn Header="Password" Binding="{Binding Password}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-
-    </Grid>
+        </Grid>
     </DockPanel>
 </Page>

@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace Berkati_Frontend.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page1.xaml
-    /// </summary>
     public partial class Page1 : Page
     {
         private DonaturViewModel _donaturViewModel;
@@ -27,6 +24,41 @@ namespace Berkati_Frontend.Pages
             InitializeComponent();
             _donaturViewModel = ((App)Application.Current).DonaturViewModel;
             DonaturItemsControl.ItemsSource = _donaturViewModel.DonaturList;
+        }
+        private void EditListButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button editButton = sender as Button;
+            if (editButton != null)
+            {
+                Donatur selectedDonatur = editButton.DataContext as Donatur;
+                if (selectedDonatur != null)
+                {
+                    // Set variabel HasChanges saat ada nilai yang diedit
+                    _donaturViewModel.HasChanges = true;
+
+                    // Memanggil perintah Edit di dalam Donatur
+                    selectedDonatur.EditCommand.Execute(_donaturViewModel);
+                }
+            }
+        }
+
+        private void DeleteListButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button deleteButton = sender as Button;
+            if (deleteButton != null)
+            {
+                Donatur selectedDonatur = deleteButton.DataContext as Donatur;
+                if (selectedDonatur != null)
+                {
+                    MessageBoxResult result = MessageBox.Show("Apakah Anda yakin ingin menghapus donatur ini?", "Konfirmasi Penghapusan", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        //Menghapus objek Donatur dari koleksi
+                        _donaturViewModel.DonaturList.Remove(selectedDonatur);
+                    }
+                }
+            }
         }
     }
 }
