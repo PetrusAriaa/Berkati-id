@@ -67,9 +67,9 @@ namespace Berkati_Backend.Models
         {
             try
             {
-                Guid? userId = CheckUser(user.Nama, user.Telp);
+                Guid? newUserId = CheckUser(user.Nama, user.Telp);
 
-                if (!userId.HasValue)
+                if (!newUserId.HasValue)
                 {
                     connection.Open();
                     user.Id = Guid.NewGuid();
@@ -86,7 +86,7 @@ namespace Berkati_Backend.Models
                 } 
                 else
                 {
-                    user.Id = userId.Value;
+                    user.Id = newUserId.Value;
                 }
 
                 Requests _request = new();
@@ -139,21 +139,98 @@ namespace Berkati_Backend.Models
             }
         }
 
+        // Semua request dengan user yang sama, usernya keganti semua
         public void UpdateUser(User user)
         {
             try
             {
-                connection.Open();
-                NpgsqlCommand cmd = new("UPDATE \"user\" SET nama = @nama, telp = @telp WHERE id = @id;", connection)
+                Guid? newUserId = CheckUser(user.Nama, user.Telp);
+
+                // Kalau user yang dimasukkan belum ada di database
+                if (!newUserId.HasValue)
                 {
-                    Parameters =
+                    connection.Open();
+                    NpgsqlCommand cmd = new("UPDATE \"user\" SET nama = @nama, telp = @telp WHERE id = @id;", connection)
                     {
-                        new("id", user.Id),
-                        new("nama", user.Nama),
-                        new("telp", user.Telp)
-                    }
-                };
-                cmd.ExecuteNonQuery();
+                        Parameters =
+                        {
+                            new("id", user.Id),
+                            new("nama", user.Nama),
+                            new("telp", user.Telp)
+                        }
+                    };
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    connection.Open();
+                    NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"requests\" SET user_id = @newUserId WHERE user_id = @userId;", connection);
+                    cmd.Parameters.AddWithValue("@newUserId", newUserId);
+                    cmd.Parameters.AddWithValue("@userId", user.Id);
+
+                    cmd.ExecuteNonQuery();
+                    user.Id = newUserId.Value;
+
+                }
+
+                Requests _request = new();
+                foreach (var request in user.Requests)
+                {
+
+                    request.UserId = user.Id;
+                    _request.UpdateRequest(request);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
+                throw new Exception("Error occurred while updating user.", ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Hanya Request tersebut yang ganti user
+        public void UpdateUser_2(User user)
+        {
+            try
+            {
+                Guid? newUserId = CheckUser(user.Nama, user.Telp);
+
+                // Kalau user yang dimasukkan belum ada di database
+                if (!newUserId.HasValue)
+                {
+                    connection.Open();
+                    user.Id = Guid.NewGuid();
+                    NpgsqlCommand cmd = new("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
+                    {
+                        Parameters =
+                        {
+                            new("id", user.Id),
+                            new("nama", user.Nama),
+                            new("telp", user.Telp)
+                        }
+                    };
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    user.Id = newUserId.Value;
+                }
+
+                Requests _request = new();
+                foreach (var request in user.Requests)
+                {
+
+                    request.UserId = user.Id;
+                    _request.UpdateRequest(request);
+                }
 
             }
             catch (Exception ex)
