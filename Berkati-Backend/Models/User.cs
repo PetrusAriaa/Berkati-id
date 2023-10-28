@@ -118,14 +118,12 @@ namespace Berkati_Backend.Models
             {
 
                 connection.Open();
-                NpgsqlCommand cmd = new("DELETE FROM \"user\" WHERE id = @id;", connection)
+                using (NpgsqlCommand cmd = new NpgsqlCommand("DELETE FROM \"requests\" WHERE user_id = @user_id; DELETE FROM \"user\" WHERE id = @id;", connection))
                 {
-                    Parameters =
-                    {
-                        new("id", userId)
-                    }
-                };
-                cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@id", userId);
+                    cmd.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {
