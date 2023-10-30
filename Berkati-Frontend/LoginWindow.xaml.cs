@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Windows.Navigation;
+using System.Threading;
 
 public class LoginResponse
 {
@@ -68,12 +68,17 @@ namespace Berkati_Frontend
                 }
                 else
                 {
+                    MessageBox.Show("Server Timeout");
                     Console.WriteLine("SWW");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Thread.Sleep(3000);
+                loginText.Text = "Login";
+                loginIcon.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.LoginVariant;
+                loginIcon.Spin = false;
+                MessageBox.Show("Server Timeout: "+ ex.Message);
             }
             
         }
