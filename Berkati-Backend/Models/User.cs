@@ -1,6 +1,7 @@
 ﻿using Npgsql.Internal.TypeHandlers;
 using DotNetEnv;
 using Npgsql;
+using Sprache;
 
 namespace Berkati_Backend.Models
 {
@@ -9,13 +10,11 @@ namespace Berkati_Backend.Models
         private Guid _id;
         private string nama;
         private string telp;
-        //private string? _reqID;
         private List<Requests>? requests;
 
         public Guid Id { get => _id; set => _id = value; }
         public string Nama { get => nama; set => nama = value; }
         public string Telp { get => telp; set => telp = value; }
-        //public string? ReqID { get => _reqID; set => _reqID = value; }
         public List<Requests>? Requests { get => requests; set => requests = value; }
 
         private readonly NpgsqlConnection connection;
@@ -68,24 +67,42 @@ namespace Berkati_Backend.Models
         {
             try
             {
-                connection.Open();
-                user.Id = Guid.NewGuid();
-                NpgsqlCommand cmd = new("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
+                Guid? newUserId = CheckUser(user.Nama, user.Telp);
+
+                if (!newUserId.HasValue)
                 {
-                    Parameters =
+                    connection.Open();
+                    user.Id = Guid.NewGuid();
+                    NpgsqlCommand cmd = new("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
                     {
-                        new("id", user.Id),
-                        new("nama", user.Nama),
-                        new("telp", user.Telp)
-                    }
-                };
-                cmd.ExecuteNonQuery();
-            }
+                        Parameters =
+                        {
+                            new("id", user.Id),
+                            new("nama", user.Nama),
+                            new("telp", user.Telp)
+                        }
+                    };
+                    cmd.ExecuteNonQuery();
+                } 
+                else
+                {
+                    user.Id = newUserId.Value;
+                }
+
+                Requests _request = new();
+                foreach (var request in user.Requests)
+                {
+
+                    request.UserId = user.Id;
+                    Guid ids = _request.AddRequest(request);
+                }
+
+             }
             catch (Exception ex)
             {
                 if (ex is NpgsqlException)
                 {
-                    throw new Exception("Database-related error occurred.", ex);
+                    throw new Exception("Database-related error occurred while creating user.", ex);
                 }
                 throw new Exception("Error occurred while creating user.", ex);
             }
@@ -99,15 +116,14 @@ namespace Berkati_Backend.Models
         {
             try
             {
+
                 connection.Open();
-                NpgsqlCommand cmd = new("DELETE FROM \"user\" WHERE id = @id;", connection)
+                using (NpgsqlCommand cmd = new NpgsqlCommand("DELETE FROM \"requests\" WHERE user_id = @user_id; DELETE FROM \"user\" WHERE id = @id;", connection))
                 {
-                    Parameters =
-                    {
-                        new("id", userId)
-                    }
-                };
-                cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@id", userId);
+                    cmd.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {
@@ -123,21 +139,47 @@ namespace Berkati_Backend.Models
             }
         }
 
+        // Semua request dengan user yang sama, usernya keganti semua
         public void UpdateUser(User user)
         {
             try
             {
-                connection.Open();
-                NpgsqlCommand cmd = new("UPDATE \"user\" SET nama = @nama, telp = @telp WHERE id = @id;", connection)
+                Guid? newUserId = CheckUser(user.Nama, user.Telp);
+
+                // Kalau user yang dimasukkan belum ada di database
+                if (!newUserId.HasValue)
                 {
-                    Parameters =
+                    connection.Open();
+                    NpgsqlCommand cmd = new("UPDATE \"user\" SET nama = @nama, telp = @telp WHERE id = @id;", connection)
                     {
-                        new("id", user.Id),
-                        new("nama", user.Nama),
-                        new("telp", user.Telp)
-                    }
-                };
-                cmd.ExecuteNonQuery();
+                        Parameters =
+                        {
+                            new("id", user.Id),
+                            new("nama", user.Nama),
+                            new("telp", user.Telp)
+                        }
+                    };
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    connection.Open();
+                    NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"requests\" SET user_id = @newUserId WHERE user_id = @userId;", connection);
+                    cmd.Parameters.AddWithValue("@newUserId", newUserId);
+                    cmd.Parameters.AddWithValue("@userId", user.Id);
+
+                    cmd.ExecuteNonQuery();
+                    user.Id = newUserId.Value;
+
+                }
+
+                Requests _request = new();
+                foreach (var request in user.Requests)
+                {
+
+                    request.UserId = user.Id;
+                    _request.UpdateRequest(request);
+                }
 
             }
             catch (Exception ex)
@@ -147,6 +189,90 @@ namespace Berkati_Backend.Models
                     throw new Exception("Database-related error occurred.", ex);
                 }
                 throw new Exception("Error occurred while updating user.", ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        // Hanya Request tersebut yang ganti user
+        public void UpdateUser_2(User user)
+        {
+            try
+            {
+                Guid? newUserId = CheckUser(user.Nama, user.Telp);
+
+                // Kalau user yang dimasukkan belum ada di database
+                if (!newUserId.HasValue)
+                {
+                    connection.Open();
+                    user.Id = Guid.NewGuid();
+                    NpgsqlCommand cmd = new("INSERT INTO \"user\" (id, nama, telp) VALUES(@id, @nama, @telp)", connection)
+                    {
+                        Parameters =
+                        {
+                            new("id", user.Id),
+                            new("nama", user.Nama),
+                            new("telp", user.Telp)
+                        }
+                    };
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    user.Id = newUserId.Value;
+                }
+
+                Requests _request = new();
+                foreach (var request in user.Requests)
+                {
+
+                    request.UserId = user.Id;
+                    _request.UpdateRequest(request);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
+                throw new Exception("Error occurred while updating user.", ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public Guid? CheckUser(string nama, string telp)
+        {
+            Guid? result = null;
+            try
+            {
+                connection.Open();
+                NpgsqlCommand cmd = new("SELECT id FROM \"user\" WHERE nama=@nama AND telp=@telp;", connection);
+                cmd.Parameters.AddWithValue("nama", nama);
+                cmd.Parameters.AddWithValue("telp", telp);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        result = reader.GetGuid(reader.GetOrdinal("id"));
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred while checking user.", ex);
+                }
+                throw new Exception("Error occurred while checking user.", ex);
             }
             finally
             {

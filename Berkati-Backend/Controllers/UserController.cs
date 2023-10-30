@@ -36,6 +36,7 @@ namespace Berkati_Backend.Controllers
             }
         }
 
+        // BUAT TAMPILAN LIST BERBAGI PAKAI INI YA :D
         [HttpGet("requests")]
         public IActionResult GetUserRequest()
         {
@@ -94,18 +95,38 @@ namespace Berkati_Backend.Controllers
             }
         }
 
+        // INI ADA 2 'UPDATE/PUT' DIBAWAH, PILIH SALAH SATU YA :D
+
+        // BUAT KALAU UNTUK SEMUA REQUEST DENGAN USER YANG SAMA DENGAN REQUEST INI, USERNYA KEGANTI SEMUA
         [HttpPut("{id}")]
-        public IActionResult Put(User user)
+        public IActionResult Put([FromBody]User user, [FromRoute]Guid id)
+        {
+             try
+             {
+                user.Id = id;
+                users.UpdateUser(user);
+                return NoContent();
+             }
+             catch (Exception ex)
+             {
+                return StatusCode(500, ex.Message);
+             }  
+        }
+
+        // BUAT KALAU HANYA REQUEST INI YANG GANTI USER
+        [HttpPut("2/{id}")]
+        public IActionResult Put_2([FromBody] User user, [FromRoute] Guid id)
         {
             try
             {
-                users.UpdateUser(user);
+                user.Id = id;
+                users.UpdateUser_2(user);
                 return NoContent();
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
-            }  
+            }
         }
 
         [HttpDelete("{id}")]
