@@ -183,7 +183,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nama" Binding="{Binding Nama}" Width="*"/>
                     <DataGridTextColumn Header="Penanggung Jawab" Binding="{Binding PenanggungJawab}" Width="*"/>
-                    <DataGridTextColumn Header="Telepon" Binding="{Binding Telepon}" Width="*"/>
+                    <DataGridTextColumn Header="Telepon" Binding="{Binding Telp}" Width="*"/>
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

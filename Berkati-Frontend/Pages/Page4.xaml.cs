@@ -16,14 +16,10 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.Net.Http;
 
-
 namespace Berkati_Frontend.Pages
 {
     public partial class Page4 : Page
     {
-        // Daftar objek untuk menampung data
-        private ObservableCollection<PartnerData> partnerDataList;
-        private PartnerData selectedPartner; // Deklarasikan variabel untuk menyimpan item yang dipilih
         private readonly HttpClient _httpClient = new();
         public Page4()
         {
@@ -49,14 +45,38 @@ namespace Berkati_Frontend.Pages
             }
 
         }
+        private async void AddPartner(PartnerData partner)
+        {
+            var apiUrl = "https://localhost:7036/partner";
+            string body = "{\"nama\":\"" + partner.Nama + "\",\"penanggungJawab\":\"" + partner.PenanggungJawab + "\",\"telp\":\"" + partner.Telp + "\",\"email\":\"" + partner.Email + "\"}";
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
+            try
+            {
+                HttpResponseMessage res = await _httpClient.PostAsync(apiUrl, content);
+                if (!res.IsSuccessStatusCode )
+                {
+                    var _res = await res.Content.ReadAsStringAsync();
+                    MessageBox.Show("Gagal menambahkan admin", _res);
+                    return;
+                }
+                MessageBox.Show("Berhasil menambahkan partner");
+                GetPartnerData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void AddPartnerBtn_Click(object sender, RoutedEventArgs e)
         {
-            string nama = NamaTextBox.Text;
-            string penanggungJawab = PenanggungJawabTextBox.Text;
-            string telepon = TeleponTextBox.Text;
-            string email = EmailTextBox.Text;
-            
-            partnerDataList.Add(new PartnerData { Nama = nama, PenanggungJawab = penanggungJawab, Telp = telepon, Email = email });
+            PartnerData partner = new()
+            {
+                Nama = NamaTextBox.Text,
+                PenanggungJawab = PenanggungJawabTextBox.Text,
+                Telp = TeleponTextBox.Text,
+                Email = EmailTextBox.Text,
+            };
+            AddPartner(partner);
 
             // Reset TextBoxes setelah menambahkan data
             NamaTextBox.Clear();
@@ -65,19 +85,61 @@ namespace Berkati_Frontend.Pages
             EmailTextBox.Clear();
         }
 
+        private async void DeletePartner(PartnerData partner)
+        {
+            var apiUri = "https://localhost:7036/partner/" + partner.Id;
+            try
+            {
+                HttpResponseMessage res = await _httpClient.DeleteAsync(apiUri);
+                if (res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Berhasil menghapus partner");
+                    GetPartnerData();
+                }
+                else
+                {
+                    MessageBox.Show("Gagal menghapus partner");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async void EditPartner (PartnerData partner)
+        {
+            var apiUrl = "https://localhost:7036/partner/" + partner.Id;
+            string body = "{\"nama\":\"" + partner.Nama + "\",\"penanggungJawab\":\"" + partner.PenanggungJawab + "\",\"telp\":\"" + partner.Telp + "\",\"email\":\"" + partner.Email + "\"}";
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
+            try
+            {
+                HttpResponseMessage res = await _httpClient.PutAsync(apiUrl, content);
+                if (!res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Gagal mengedit partner");
+                    return;
+                }
+                MessageBox.Show("Berhasil mengedit partner");
+                GetPartnerData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void EditPartnerBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DataGrid.SelectedItem != null)
             {
-                selectedPartner = (PartnerData)DataGrid.SelectedItem;
+                PartnerData partner = (PartnerData)DataGrid.SelectedItem;
 
-                selectedPartner.Nama = NamaTextBox.Text;
-                selectedPartner.PenanggungJawab = PenanggungJawabTextBox.Text;
-                selectedPartner.Telp = TeleponTextBox.Text;
-                selectedPartner.Email = EmailTextBox.Text;
+                partner.Nama = NamaTextBox.Text;
+                partner.PenanggungJawab = PenanggungJawabTextBox.Text;
+                partner.Telp = TeleponTextBox.Text;
+                partner.Email = EmailTextBox.Text;
 
-                // Memperbarui DataGrid
-                DataGrid.Items.Refresh();
+                EditPartner(partner);
 
                 // Mengatur nilai TextBoxes ke kosong jika tidak ada item yang dipilih
                 NamaTextBox.Clear();
@@ -87,7 +149,6 @@ namespace Berkati_Frontend.Pages
 
                 // Setelah pembaruan, atur fokus ke baris yang baru saja diperbarui
                 DataGrid.SelectedItem = null;
-                //DataGrid.SelectedItem = selectedPartner;
             }
         }
 
@@ -95,9 +156,9 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
-                PartnerData selectedPartner = (PartnerData)DataGrid.SelectedItem;
+                PartnerData partner = (PartnerData)DataGrid.SelectedItem;
 
-                partnerDataList.Remove(selectedPartner);
+                DeletePartner(partner);
 
                 // Reset TextBoxes setelah menghapus data
                 NamaTextBox.Clear();
@@ -111,12 +172,12 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
-                PartnerData selectedPartner = (PartnerData)DataGrid.SelectedItem;
+                PartnerData partner = (PartnerData)DataGrid.SelectedItem;
 
-                NamaTextBox.Text = selectedPartner.Nama;
-                PenanggungJawabTextBox.Text = selectedPartner.PenanggungJawab;
-                TeleponTextBox.Text = selectedPartner.Telp; // Ubah nilai integer ke string saat menampilkan di TextBox
-                EmailTextBox.Text = selectedPartner.Email;
+                NamaTextBox.Text = partner.Nama;
+                PenanggungJawabTextBox.Text = partner.PenanggungJawab;
+                TeleponTextBox.Text = partner.Telp; // Ubah nilai integer ke string saat menampilkan di TextBox
+                EmailTextBox.Text = partner.Email;
 
                 // Mengatur DataGrid ke mode baca saja
                 DataGrid.IsReadOnly = true;
