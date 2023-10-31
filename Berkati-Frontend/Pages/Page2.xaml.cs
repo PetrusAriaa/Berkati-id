@@ -23,7 +23,7 @@ namespace Berkati_Frontend.Pages
         public Page2()
         {
             InitializeComponent();
-            _donaturViewModel = ((App)Application.Current).DonaturViewModel;
+            _donaturViewModel = ((App)Application.Current).DonaturViewModel ?? throw new ArgumentNullException(nameof(_donaturViewModel));
             DataContext = _donaturViewModel;
         }
 

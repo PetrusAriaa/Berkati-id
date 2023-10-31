@@ -1,6 +1,7 @@
 ﻿using Berkati_Frontend.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,10 @@ namespace Berkati_Frontend.Pages
         {
             InitializeComponent();
             _donaturViewModel = ((App)Application.Current).DonaturViewModel;
-            DonaturItemsControl.ItemsSource = _donaturViewModel.DonaturList;
+            // Memastikan _donaturViewModel tidak null sebelum mengakses DonaturList
+            DonaturItemsControl.ItemsSource = _donaturViewModel?.DonaturList ?? new ObservableCollection<Donatur>();
+            DataContext = new DonaturViewModel();
+
         }
         private void EditListButton_Click(object sender, RoutedEventArgs e)
         {
@@ -31,7 +35,7 @@ namespace Berkati_Frontend.Pages
             if (editButton != null)
             {
                 Donatur selectedDonatur = editButton.DataContext as Donatur;
-                if (selectedDonatur != null)
+                if (selectedDonatur != null && selectedDonatur.EditCommand != null)
                 {
                     // Set variabel HasChanges saat ada nilai yang diedit
                     _donaturViewModel.HasChanges = true;

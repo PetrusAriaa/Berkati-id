@@ -11,9 +11,9 @@
       Title="Page2">
 
     <DockPanel VerticalAlignment="Stretch">
-        <!-- Teks "ADD LIST" -->
+        <!-- Teks "ADD REQUEST" -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
-            <TextBlock Text="ADD LIST" Margin="10" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="ADD REQUEST" Margin="10" FontSize="24" FontWeight="Bold"/>
         </StackPanel>
         <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
