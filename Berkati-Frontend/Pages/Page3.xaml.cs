@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,59 +10,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Net.Http;
-using Newtonsoft.Json;
+using Berkati_Frontend.Handler;
 
 namespace Berkati_Frontend.Pages
 {
     public partial class Page3 : Page
     {
-        private readonly HttpClient _httpClient = new();
         public Page3()
         {
             InitializeComponent();
-            GetAdminData();
+            Admin.GetAdminData(DataGrid);
             AddAdminBtn.Content = "Add";
-        }
-        private async void GetAdminData()
-        {
-            var apiUri = "https://localhost:7036/admin";
-            try
-            {
-                HttpResponseMessage res = await _httpClient.GetAsync(apiUri);
-                if (res.IsSuccessStatusCode)
-                {
-                    var content = await res.Content.ReadAsStringAsync();
-                    var json = JsonConvert.DeserializeObject<UserData>(content);
-                    DataGrid.ItemsSource = json.Data;
-                }
-            }catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-        private async void AddAdmin(Admin admin)
-        {
-            var apiUri = "https://localhost:7036/admin";
-            string body = "{\"username\":\"" + admin.Username + "\",\"password\":\"" + admin.Password+ "\"}";
-            var content = new StringContent(body, Encoding.UTF8, "application/json");
-            try
-            {
-                HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
-                if (res.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Berhasil menambahkan admin");
-                    GetAdminData();
-                }
-                else
-                {
-                    MessageBox.Show("Gagal menambahkan admin");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
         
         private void AddAdminBtn_Click(object sender, RoutedEventArgs e)
@@ -73,12 +28,12 @@ namespace Berkati_Frontend.Pages
 
             if (AddAdminBtn.Content == "Add")
             {
-                Admin admin = new()
+                Admin.AdminData admin = new()
                 {
                     Username = UsernameTextBox.Text,
                     Password = PasswordTextBox.Text,
                 };
-                AddAdmin(admin);
+                Admin.AddAdmin(admin, DataGrid);
 
                 // Reset TextBoxes setelah menambahkan admin
                 UsernameTextBox.Clear();
@@ -94,37 +49,16 @@ namespace Berkati_Frontend.Pages
             }
         }
         
-        private async void DeleteAdmin(Admin admin)
-        {
-            var apiUri = "https://localhost:7036/admin/"+admin.Id;
-            try
-            {
-                HttpResponseMessage res = await _httpClient.DeleteAsync(apiUri);
-                if (res.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Berhasil menghapus admin");
-                    GetAdminData();
-                }
-                else
-                {
-                    MessageBox.Show("Gagal menghapus admin");
-                }
-            }
-            catch (Exception ex)
-            { 
-                Console.WriteLine(ex.Message);
-            }
-        }
         
         private void DeleteAdminBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DataGrid.SelectedItem != null)
             {
                 // Mengambil item yang dipilih dari DataGrid
-                Admin admin = (Admin)DataGrid.SelectedItem;
+                Admin.AdminData admin = (Admin.AdminData)DataGrid.SelectedItem;
 
                 // Menghapus item yang dipilih dari daftar
-                DeleteAdmin(admin);
+                Admin.DeleteAdmin(admin, DataGrid);
 
                 // Reset TextBoxes setelah menghapus admin
                 UsernameTextBox.Clear();
@@ -139,7 +73,7 @@ namespace Berkati_Frontend.Pages
             if (DataGrid.SelectedItem != null)
             {
                 // Mengambil item yang dipilih dari DataGrid
-                Admin selectedAdmin = (Admin)DataGrid.SelectedItem;
+                Admin.AdminData selectedAdmin = (Admin.AdminData)DataGrid.SelectedItem;
 
                 // Menampilkan nilai item yang dipilih di dalam inputan
                 UsernameTextBox.Text = selectedAdmin.Username;
@@ -159,17 +93,5 @@ namespace Berkati_Frontend.Pages
         }
 
         // Kelas untuk data pengguna
-        public class Admin
-        {
-            public Guid? Id { get; set; }
-            public string? Username { get; set; }
-            public string? Password { get; set; }
-            public string? IsSuperUser { get; set; }
-            public DateTime? LastLogin { get; set; }
-        }
-        public class UserData
-        {
-            public List<Admin>? Data { get; set; }
-        }
     }
 }
