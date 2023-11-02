@@ -4,6 +4,12 @@ using Npgsql;
 using BC = BCrypt.Net.BCrypt;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection.PortableExecutable;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace Berkati_Backend.Models
 {
@@ -26,9 +32,9 @@ namespace Berkati_Backend.Models
         public Admin()
         {
             Env.Load("./Build/.env");
-
             string? _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
             connection = new NpgsqlConnection(_connectionString);
+
         }
 
         public virtual List<Admin> GetAllAdmin()
@@ -78,6 +84,7 @@ namespace Berkati_Backend.Models
             {
                 connection.Open();
                 admin.Id = Guid.NewGuid();
+                admin.isSuperUser= false;
                 admin.Password = EncryptPassword(admin.Password);
                 NpgsqlCommand cmd = new("INSERT INTO \"admin\" (id, username, password, last_login, is_super_user) VALUES(@id, @username, @password, @last_login, @is_super_user)", connection)
                 {
@@ -173,8 +180,34 @@ namespace Berkati_Backend.Models
             string encryptedPass = BC.EnhancedHashPassword(password, 13);
             return encryptedPass;
         }
+
+        public string generateToken(Admin admin)
+        {
+            // Generate JWT token
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")));
+            var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                        new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString()),
+                        new Claim(ClaimTypes.Name, admin.Username),
+                        new Claim(ClaimTypes.Role, admin.IsSuperUser ? "SuperUser" : "RegularUser")
+                    };
+
+            var tokenOptions = new JwtSecurityToken(
+                issuer: Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                audience: Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1), // Token expiration time
+                signingCredentials: signingCredentials
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            return tokenString;
+        }
+
         
-        public bool Login(string username, string password)
+        public string Login(string username, string password)
         {
             Admin admin = new();
             try
@@ -195,7 +228,7 @@ namespace Berkati_Backend.Models
                     }
                     else
                     {
-                        return false;
+                        return null;
                     }
                 }
 
@@ -212,10 +245,31 @@ namespace Berkati_Backend.Models
                     };
                     command.ExecuteNonQuery();
                     connection.Close();
-                    return true;
+
+                    var tokenString = generateToken(admin);
+
+                    bool valid = ValidateToken(tokenString, Environment.GetEnvironmentVariable("JWT_KEY"));
+                    Console.WriteLine(valid);
+
+                    if (ValidateToken(tokenString, Environment.GetEnvironmentVariable("JWT_KEY")))
+                    {
+                        string nameIdentifier = GetClaim<string>("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", tokenString);
+                        string name = GetClaim<string>("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", tokenString);
+                        string role = GetClaim<string>("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", tokenString);
+
+                        Console.WriteLine($"NameIdentifier: {nameIdentifier}");
+                        Console.WriteLine($"Name: {name}");
+                        Console.WriteLine($"Role: {role}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid token.");
+                    }
+
+                    return tokenString;
                 }
 
-                return false;
+                return null;
             }
             catch (Exception ex)
             {
@@ -226,6 +280,45 @@ namespace Berkati_Backend.Models
                 throw new Exception("Error occurred while login.", ex);
             }
 
+        }
+
+        public bool ValidateToken(string token, string key)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = "berkati-admin",
+                ValidAudience = "berkati-admin",
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+            };
+
+            try
+            {
+                tokenHandler.ValidateToken(token, validationParameters, out _);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static T GetClaim<T>(string claimType, string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claim = jwtToken.Claims.FirstOrDefault(c => c.Type == claimType);
+
+            if (claim != null)
+            {
+                return (T)Convert.ChangeType(claim.Value, typeof(T));
+            }
+
+            return default;
         }
 
     }
