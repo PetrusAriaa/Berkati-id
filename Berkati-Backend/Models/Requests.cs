@@ -10,28 +10,16 @@ namespace Berkati_Backend.Models
         private Guid _id;
         private Guid _userId;
         private DateTime tanggal;
-        private string jalan;
-        private string rt;
-        private string rw;
-        private string kel;
-        private string kec;
-        private string kab_kota;
-        private string provinsi;
-        private string kodepos;
+        private string alamat;
+        private string waktu;
         private int est_jumlah;
         private string? status;
 
         public Guid Id { get => _id; set => _id = value; }
         public Guid UserId { get => _userId; set => _userId = value; }
         public DateTime Tanggal { get => tanggal; set => tanggal = value; }
-        public string Jalan { get => jalan; set => jalan = value; }
-        public string Rt { get => rt; set => rt = value; }
-        public string Rw { get => rw; set => rw = value; }
-        public string Kel { get => kel; set => kel = value; }
-        public string Kec { get => kec; set => kec = value; }
-        public string Kab_kota { get => kab_kota; set => kab_kota = value; }
-        public string Provinsi { get => provinsi; set => provinsi = value; }
-        public string Kodepos { get => kodepos; set => kodepos = value; }
+        public string Alamat { get => alamat; set => alamat = value; }
+        public string Waktu { get => waktu; set => waktu = value; }
         public int Est_jumlah { get => est_jumlah; set => est_jumlah = value; }
         public string? Status { get => status; set => status = value; }
 
@@ -59,14 +47,8 @@ namespace Berkati_Backend.Models
                     {
                         Id = reader.GetGuid(reader.GetOrdinal("id")),
                         Tanggal = reader.GetDateTime(reader.GetOrdinal("tanggal")),
-                        Jalan = reader.GetString(reader.GetOrdinal("jalan")),
-                        Rt = reader.GetString(reader.GetOrdinal("rt")),
-                        Rw = reader.GetString(reader.GetOrdinal("rw")),
-                        Kel = reader.GetString(reader.GetOrdinal("kel")),
-                        Kec = reader.GetString(reader.GetOrdinal("kec")),
-                        Kab_kota = reader.GetString(reader.GetOrdinal("kab_kota")),
-                        Provinsi = reader.GetString(reader.GetOrdinal("provinsi")),
-                        Kodepos = reader.GetString(reader.GetOrdinal("kodepos")),
+                        Alamat = reader.GetString(reader.GetOrdinal("alamat")),
+                        Waktu = reader.GetString(reader.GetOrdinal("waktu")),
                         Est_jumlah = reader.GetInt32(reader.GetOrdinal("est_jumlah")),
                         Status = reader.GetString(reader.GetOrdinal("status")),
                         UserId = reader.GetGuid(reader.GetOrdinal("user_id")),
@@ -106,14 +88,8 @@ namespace Berkati_Backend.Models
                         {
                             Id = reader.GetGuid(reader.GetOrdinal("id")),
                             Tanggal = reader.GetDateTime(reader.GetOrdinal("tanggal")),
-                            Jalan = reader.GetString(reader.GetOrdinal("jalan")),
-                            Rt = reader.GetString(reader.GetOrdinal("rt")),
-                            Rw = reader.GetString(reader.GetOrdinal("rw")),
-                            Kel = reader.GetString(reader.GetOrdinal("kel")),
-                            Kec = reader.GetString(reader.GetOrdinal("kec")),
-                            Kab_kota = reader.GetString(reader.GetOrdinal("kab_kota")),
-                            Provinsi = reader.GetString(reader.GetOrdinal("provinsi")),
-                            Kodepos = reader.GetString(reader.GetOrdinal("kodepos")),
+                            Alamat = reader.GetString(reader.GetOrdinal("alamat")),
+                            Waktu = reader.GetString(reader.GetOrdinal("waktu")),
                             Est_jumlah = reader.GetInt32(reader.GetOrdinal("est_jumlah")),
                             Status = reader.GetString(reader.GetOrdinal("status")),
                             UserId = reader.GetGuid(reader.GetOrdinal("user_id")),
@@ -145,20 +121,14 @@ namespace Berkati_Backend.Models
                 connection.Open();
                 requests.Id = Guid.NewGuid();
                 requests.Status = "REQUESTED";
-                NpgsqlCommand cmd = new("INSERT INTO \"requests\" (id, tanggal, jalan, rt, rw, kel, kec, kab_kota, provinsi, kodepos, est_jumlah, status, user_id) VALUES(@id, @tanggal, @jalan, @rt, @rw, @kel, @kec, @kab_kota, @provinsi, @kodepos, @est_jumlah, @status, @user_id)", connection)
+                NpgsqlCommand cmd = new("INSERT INTO \"requests\" (id, tanggal, alamat, waktu, est_jumlah, status, user_id) VALUES(@id, @tanggal, @alamat, @waktu, @est_jumlah, @status, @user_id)", connection)
                 {
                     Parameters =
                     {
                         new("id", requests.Id),
                         new("tanggal", requests.Tanggal),
-                        new("jalan", requests.Jalan),
-                        new("rt", requests.Rt),
-                        new("rw", requests.Rw),
-                        new("kel", requests.Kel),
-                        new("kec", requests.Kec),
-                        new("kab_kota", requests.Kab_kota),
-                        new("provinsi", requests.Provinsi),
-                        new("kodepos", requests.Kodepos),
+                        new("alamat", requests.Alamat),
+                        new("waktu", requests.Waktu),
                         new("est_jumlah", requests.Est_jumlah),
                         new("status", requests.Status),
                         new("user_id", requests.UserId),
@@ -189,20 +159,14 @@ namespace Berkati_Backend.Models
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new("UPDATE \"requests\" SET tanggal=@tanggal, jalan=@jalan, rt=@rt, rw=@rw, kel=@kel, kec=@kec, kab_kota=@kab_kota, provinsi=@provinsi, kodepos=@kodepos, est_jumlah=@est_jumlah, status=@status, user_id=@user_id WHERE id = @id;", connection)
+                NpgsqlCommand cmd = new("UPDATE \"requests\" SET tanggal=@tanggal, alamat=@alamat, waktu=@waktu, est_jumlah=@est_jumlah, status=@status, user_id=@user_id WHERE id = @id;", connection)
                 {
                     Parameters =
                     {
                         new("id", requests.Id),
                         new("tanggal", requests.Tanggal),
-                        new("jalan", requests.Jalan),
-                        new("rt", requests.Rt),
-                        new("rw", requests.Rw),
-                        new("kel", requests.Kel),
-                        new("kec", requests.Kec),
-                        new("kab_kota", requests.Kab_kota),
-                        new("provinsi", requests.Provinsi),
-                        new("kodepos", requests.Kodepos),
+                        new("alamat", requests.Alamat),
+                        new("waktu", requests.Waktu),
                         new("est_jumlah", requests.Est_jumlah),
                         new("status", requests.Status),
                         new("user_id", requests.UserId),
