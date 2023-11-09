@@ -90,6 +90,7 @@ namespace Berkati_Backend.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperUser")]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
@@ -107,8 +108,8 @@ namespace Berkati_Backend.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginBody data)
         {
-            //try
-            //{
+            try
+            {
                 if(string.IsNullOrEmpty(data.Username) || string.IsNullOrEmpty(data.Password))
                 {
                     return BadRequest("Invalid login request.");
@@ -120,11 +121,11 @@ namespace Berkati_Backend.Controllers
                     accessedAt = DateTime.UtcNow
                 };
                 return Ok(res);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
 
         }
 

@@ -53,14 +53,8 @@ namespace Berkati_Backend.Controllers
                                 telp = user.Telp,
                                 requestId = request.Id,
                                 tanggal = request.Tanggal,
-                                jalan = request.Jalan,
-                                rt = request.Rt,
-                                rw = request.Rw,
-                                kel = request.Kel,
-                                kec = request.Kec,
-                                kab_kota = request.Kab_kota,
-                                provinsi = request.Provinsi,
-                                kodepos = request.Kodepos,
+                                alamat = request.Alamat,
+                                waktu = request.Waktu,
                                 est_jumlah = request.Est_jumlah,
                                 status = request.Status
                             }
