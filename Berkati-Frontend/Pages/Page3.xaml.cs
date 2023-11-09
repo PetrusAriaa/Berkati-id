@@ -25,6 +25,7 @@ namespace Berkati_Frontend.Pages
         {
             InitializeComponent();
             GetAdminData();
+            AddAdminBtn.Content = "Add";
         }
         private async void GetAdminData()
         {
