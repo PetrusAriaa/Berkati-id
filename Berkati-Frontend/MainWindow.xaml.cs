@@ -34,6 +34,7 @@ namespace Berkati_Frontend
 
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)
         {
+            System.Environment.SetEnvironmentVariable("TOKEN", null);
             LoginWindow loginWindow = new();
             loginWindow.Show();
             Close();

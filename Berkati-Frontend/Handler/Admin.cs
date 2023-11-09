@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Windows.Controls;
 using System.Windows;
 using System.Text;
+using System.Net.Http.Headers;
 
 namespace Berkati_Frontend.Handler
 {
@@ -36,6 +37,7 @@ namespace Berkati_Frontend.Handler
             var apiUri = "https://localhost:7036/admin";
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("TOKEN"));
                 HttpResponseMessage res = await _httpClient.GetAsync(apiUri);
                 if (!res.IsSuccessStatusCode)
                 {

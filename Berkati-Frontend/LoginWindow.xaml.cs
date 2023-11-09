@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading;
+using System.Net.Http.Headers;
 
 public class LoginResponse
 {
-    public bool Data { get; set; }
-    public DateTime AccessedAt { get; set; }
+    public String token { get; set; }
 }
 namespace Berkati_Frontend
 {
@@ -52,8 +52,9 @@ namespace Berkati_Frontend
                     string _res = await res.Content.ReadAsStringAsync();
 
                     var json = JsonConvert.DeserializeObject<LoginResponse>(_res);
-                    if (json.Data)
+                    if (!string.IsNullOrEmpty(json.token))
                     {
+                        Environment.SetEnvironmentVariable("TOKEN", json.token);
                         MainWindow mainWindow = new();
                         mainWindow.Show();
                         Close();
