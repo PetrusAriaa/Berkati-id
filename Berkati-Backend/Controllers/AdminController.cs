@@ -1,6 +1,9 @@
 ﻿using Berkati_Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Reflection.PortableExecutable;
 using System.Text.Json;
 
 public class LoginBody
@@ -21,12 +24,22 @@ namespace Berkati_Backend.Controllers
         {
             this.admins = new Admin();
         }
-        
+
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
+                var headers = HttpContext.Request.Headers;
+                if (headers.TryGetValue("Authorization", out var _authHeader))
+                {
+                    string authHeader= _authHeader;
+                    string[] authStrings = authHeader.Split(' ');
+                    string authToken = authStrings[1];
+                    
+                };
+                //Console.WriteLine(authToken.);
                 List<Admin> _data = admins.GetAllAdmin();
                 var res = new
                 {
@@ -42,12 +55,16 @@ namespace Berkati_Backend.Controllers
             }
             
         }
-        
+
+        [Authorize(Roles = "SuperUser")]
         [HttpPost]
         public IActionResult Post([FromBody]Admin admin)
         {
             try
             {
+                var claims = User.Claims.Select(c => new { c.Type, c.Value });
+                Console.WriteLine(claims);
+
                 Guid Id = admins.AddAdmin(admin);
                 return Created(Id.ToString(), admin);
             }
@@ -90,24 +107,24 @@ namespace Berkati_Backend.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginBody data)
         {
-            try
-            {
+            //try
+            //{
                 if(string.IsNullOrEmpty(data.Username) || string.IsNullOrEmpty(data.Password))
                 {
                     return BadRequest("Invalid login request.");
                 }
-                bool isLogin = admins.Login(data.Username, data.Password);
+                string token = admins.Login(data.Username, data.Password);
                 var res = new
                 {
-                    data = isLogin,
+                    token,
                     accessedAt = DateTime.UtcNow
                 };
                 return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, ex.Message);
+            //}
 
         }
 
