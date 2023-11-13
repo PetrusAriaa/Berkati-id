@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Berkati_Frontend.Handler;
 
 namespace Berkati_Frontend.Pages
 {
@@ -29,26 +30,24 @@ namespace Berkati_Frontend.Pages
 
         private void AddListBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Membaca data dari TextBoxes
-            string nama = NamaTextBox.Text;
-            string telepon = TeleponTextBox.Text;
-            int jumlah = int.TryParse(JumlahTextBox.Text, out int parsedJumlah) ? parsedJumlah : 0;
-            string alamat = AlamatTextBox.Text;
-            DateTime tanggal = TanggalDatePicker.SelectedDate ?? DateTime.MinValue; 
-            string jam = JamTextBox.Text;
-
-            // Menambahkan donatur baru ke koleksi donatur
-            _donaturViewModel.DonaturList.Add(new Donatur
+            List<Requests.RequestsData> requestList = new();
+            Requests.RequestsData r = new()
             {
-                Nama = nama,
-                Telepon = telepon,
-                Jumlah = jumlah,
-                Alamat = alamat,
-                Tanggal = tanggal, 
-                Jam = jam 
-            });
+                Est_jumlah = int.TryParse(JumlahTextBox.Text, out int parsedJumlah) ? parsedJumlah : 0,
+                Alamat = AlamatTextBox.Text,
+                Tanggal = TanggalDatePicker.SelectedDate ?? DateTime.MinValue,
+                Waktu = JamTextBox.Text,
+            };
+            requestList.Add(r);
+            Requests.UserData u = new()
+            {
+                Nama = NamaTextBox.Text,
+                Telp = TeleponTextBox.Text,
+                Requests = requestList,
+            };
 
-            // Reset TextBoxes setelah menambahkan donatur
+            Requests.CreateRequest(u);
+
             NamaTextBox.Clear();
             TeleponTextBox.Clear();
             JumlahTextBox.Clear();
