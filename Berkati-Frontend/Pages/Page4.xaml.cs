@@ -12,22 +12,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Berkati_Frontend.Handler;
+using Berkati_Frontend.Themes;
 
 namespace Berkati_Frontend.Pages
 {
     public partial class Page4 : Page
     {
-        private static Color FG_GREY = (Color)ColorConverter.ConvertFromString("#A2A2A2");
-        private static Color BG_GREY = (Color)ColorConverter.ConvertFromString("#D9D9D9");
-        private static Color SALMON = (Color)ColorConverter.ConvertFromString("#F78838");
         public Page4()
         {
             InitializeComponent();
             Partner.GetPartnerData(DataGrid);
-            EditPartnerBtn.Background = new SolidColorBrush(BG_GREY);
-            EditPartnerBtn.Foreground = new SolidColorBrush(FG_GREY);
-            DeletePartnerBtn.Background = new SolidColorBrush(BG_GREY);
-            DeletePartnerBtn.Foreground = new SolidColorBrush(FG_GREY);
+            EditPartnerBtn.Background = new SolidColorBrush(ColorTheme.BG_GREY);
+            EditPartnerBtn.Foreground = new SolidColorBrush(ColorTheme.FG_GREY);
+            DeletePartnerBtn.Background = new SolidColorBrush(ColorTheme.BG_GREY);
+            DeletePartnerBtn.Foreground = new SolidColorBrush(ColorTheme.FG_GREY);
             EditPartnerBtn.IsEnabled = false;
             DeletePartnerBtn.IsEnabled = false;
             AddPartnerBtn.Content = "Add";
@@ -107,9 +105,9 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
-                EditPartnerBtn.Background = new SolidColorBrush(SALMON);
+                EditPartnerBtn.Background = new SolidColorBrush(ColorTheme.SALMON);
                 EditPartnerBtn.Foreground = new SolidColorBrush(Colors.White);
-                DeletePartnerBtn.Background = new SolidColorBrush(SALMON);
+                DeletePartnerBtn.Background = new SolidColorBrush(ColorTheme.SALMON);
                 DeletePartnerBtn.Foreground = new SolidColorBrush(Colors.White);
                 EditPartnerBtn.IsEnabled = true;
                 DeletePartnerBtn.IsEnabled = true;
@@ -128,10 +126,10 @@ namespace Berkati_Frontend.Pages
             else
             {
                 AddPartnerBtn.Content = "Add";
-                EditPartnerBtn.Background = new SolidColorBrush(BG_GREY);
-                EditPartnerBtn.Foreground = new SolidColorBrush(FG_GREY);
-                DeletePartnerBtn.Background = new SolidColorBrush(BG_GREY);
-                DeletePartnerBtn.Foreground = new SolidColorBrush(FG_GREY);
+                EditPartnerBtn.Background = new SolidColorBrush(ColorTheme.BG_GREY);
+                EditPartnerBtn.Foreground = new SolidColorBrush(ColorTheme.FG_GREY);
+                DeletePartnerBtn.Background = new SolidColorBrush(ColorTheme.BG_GREY);
+                DeletePartnerBtn.Foreground = new SolidColorBrush(ColorTheme.FG_GREY);
                 EditPartnerBtn.IsEnabled = false;
                 DeletePartnerBtn.IsEnabled = false;
             }
