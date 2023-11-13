@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading;
-using System.Net.Http.Headers;
 
 public class LoginResponse
 {
@@ -27,13 +16,23 @@ namespace Berkati_Frontend
         public LoginWindow()
         {
             InitializeComponent();
+            Environment.SetEnvironmentVariable("ENV", "development");
+            //Environment.SetEnvironmentVariable("ENV", "production");
+            if (Environment.GetEnvironmentVariable("ENV") == "development")
+            {
+                Environment.SetEnvironmentVariable("LISTEN", "https://localhost:7036");
+            }
+            else
+            {
+                Environment.SetEnvironmentVariable("LISTEN", "http://18.139.1.64");
+            }
         }
 
         private readonly HttpClient _httpClient = new();
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            string apiUri = "https://localhost:7036/admin/login";
+            string apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/admin/login";
             if (string.IsNullOrEmpty(unameInput.Text) || string.IsNullOrEmpty(passwordInput.Password.ToString()))
             {
                 MessageBox.Show("Please insert username and password");

@@ -34,7 +34,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void GetAdminData(DataGrid dataGrid)
         {
-            var apiUri = "https://localhost:7036/admin";
+            var apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/admin";
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("TOKEN"));
@@ -57,7 +57,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void AddAdmin(AdminData admin, DataGrid dataGrid)
         {
-            var apiUri = "https://localhost:7036/admin";
+            var apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/admin";
             string body = "{\"username\":\"" + admin.Username + "\",\"password\":\"" + admin.Password + "\"}";
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             try
@@ -80,7 +80,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void DeleteAdmin(AdminData admin, DataGrid dataGrid)
         {
-            var apiUri = "https://localhost:7036/admin/" + admin.Id;
+            var apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/admin/" + admin.Id;
             try
             {
                 HttpResponseMessage res = await _httpClient.DeleteAsync(apiUri);
