@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Berkati_Frontend.Themes.RequestCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" Width="700" Height="286" Background="LightGray" Margin="4">
+    <DockPanel VerticalAlignment="Stretch">
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Margin="10" Width="300">
+                <TextBlock Text="Nama:"/>
+                <TextBox x:Name="tbNama" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+                <TextBlock Text="Telepon:" Margin="0,10,0,0"/>
+                <TextBox x:Name="tbTelepon" Padding="5" MaxLength="15" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+                <TextBlock Text="Alamat:" Margin="0,10,0,0"/>
+                <TextBox x:Name="tbAlamat" Padding="5" MaxLength="10" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10" Width="300">
+                <TextBlock Text="Jumlah:"/>
+                <TextBox x:Name="tbJumlah" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+                <TextBlock Text="Tanggal:" Margin="0,10,0,0"/>
+                <DatePicker x:Name="dpTanggal" Padding="5" HorizontalAlignment="Stretch"/>
+                <TextBlock Text="Waktu:" Margin="0,10,0,0"/>
+                <TextBox x:Name="tbWaktu" Padding="5" MaxLength="10" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Margin="8, 0, 4, 0" VerticalAlignment="Center">Status :</TextBlock>
+                <TextBlock x:Name="tbStatus" VerticalAlignment="Center" FontSize="28" FontWeight="Bold" Text=""/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Width="300">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="btnEdit" Margin="4" Content="Edit" Background="#FFD569" Cursor="Hand" Foreground="#FF6A4D3D" BorderBrush="{x:Null}" />
+                    <Button x:Name="btnDelete" Margin="4" Content="Delete" Background="#EB3153" Cursor="Hand" BorderBrush="{x:Null}"/>
+                    <Button x:Name="btnDone" Margin="4" Content="DONE" Background="#12CE52" Cursor="Hand" BorderBrush="{x:Null}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>

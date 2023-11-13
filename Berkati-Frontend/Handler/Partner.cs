@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows;
+using System.Net.Http.Headers;
 
 namespace Berkati_Frontend.Handler
 {
@@ -33,7 +34,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void GetPartnerData(DataGrid dataGrid)
         {
-            var apiUrl = "https://localhost:7036/partner";
+            var apiUrl = Environment.GetEnvironmentVariable("LISTEN") + "/partner";
             try
             {
                 HttpResponseMessage res = await _httpClient.GetAsync(apiUrl);
@@ -56,7 +57,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void AddPartner(PartnerData partner, DataGrid datagrid)
         {
-            var apiUrl = "https://localhost:7036/partner";
+            var apiUrl = Environment.GetEnvironmentVariable("LISTEN") + "/partner";
             string body = "{\"nama\":\"" + partner.Nama + "\",\"penanggungJawab\":\"" + partner.PenanggungJawab + "\",\"telp\":\"" + partner.Telp + "\",\"email\":\"" + partner.Email + "\"}";
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             try
@@ -80,7 +81,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void EditPartner(PartnerData partner, DataGrid dataGrid)
         {
-            var apiUrl = "https://localhost:7036/partner/" + partner.Id;
+            var apiUrl = Environment.GetEnvironmentVariable("LISTEN") + "/partner/" + partner.Id;
             string body = "{\"nama\":\"" + partner.Nama + "\",\"penanggungJawab\":\"" + partner.PenanggungJawab + "\",\"telp\":\"" + partner.Telp + "\",\"email\":\"" + partner.Email + "\"}";
             var content = new StringContent(body, Encoding.UTF8, "application/json");
             try
@@ -103,7 +104,7 @@ namespace Berkati_Frontend.Handler
 
         public static async void DeletePartner(PartnerData partner, DataGrid dataGrid)
         {
-            var apiUri = "https://localhost:7036/partner/" + partner.Id;
+            var apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/partner/" + partner.Id;
             try
             {
                 HttpResponseMessage res = await _httpClient.DeleteAsync(apiUri);

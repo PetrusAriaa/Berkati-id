@@ -68,7 +68,7 @@ namespace Berkati_Backend.Models
             try
             {
                 Guid? newUserId = CheckUser(user.Nama, user.Telp);
-
+                Console.WriteLine(user.Nama);
                 if (!newUserId.HasValue)
                 {
                     connection.Open();
@@ -88,7 +88,6 @@ namespace Berkati_Backend.Models
                 {
                     user.Id = newUserId.Value;
                 }
-
                 Requests _request = new();
                 foreach (var request in user.Requests)
                 {

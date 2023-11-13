@@ -102,7 +102,7 @@
                                         <Border x:Name="EditPartnerBorder" Background="{TemplateBinding Background}" CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
+                                                <DropShadowEffect x:Name="DefaultShadowEdit" ShadowDepth="0" BlurRadius="10" Color="Transparent" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
@@ -149,7 +149,7 @@
                                         <Border x:Name="DeletePartnerBorder" Background="{TemplateBinding Background}" CornerRadius="16">
                                             <Border.Effect>
                                                 <!-- Efek bayangan menggunakan DropShadowEffect -->
-                                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="#F78838" Opacity="0.5"/>
+                                                <DropShadowEffect x:Name="DefaultShadowDelete" ShadowDepth="0" Color="Transparent" BlurRadius="10" Opacity="0.5"/>
                                             </Border.Effect>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
