@@ -39,7 +39,6 @@ namespace Berkati_Backend.Controllers
                     string authToken = authStrings[1];
                     
                 };
-                //Console.WriteLine(authToken.);
                 List<Admin> _data = admins.GetAllAdmin();
                 var res = new
                 {

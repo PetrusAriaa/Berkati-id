@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  berkati:
+    build: .
+    container_name: backend
+    env_file:
+      - ./Build/.env
+    ports:
+      - 7036:80
