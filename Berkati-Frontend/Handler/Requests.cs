@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Windows.Media;
 using Berkati_Frontend.Themes;
 using Newtonsoft.Json;
 
@@ -35,21 +32,24 @@ namespace Berkati_Frontend.Handler
 
         public class ResRequests:RequestsData
         {
-            public Guid? UserId { get; set; }
+            public Guid UserId { get; set; }
             public string? Nama { get; set;}
-            public Guid? RequestId { get; set; }
+            public Guid RequestId { get; set; }
             public string? Telp { get; set; }
 
         }
 
         public class ResponseData
         {
-            public List<ResRequests> Data { get; set; }
+            public List<ResRequests>? Data { get; set; }
         }
 
-        public static async void GetRequests(StackPanel stackPanel)
+
+
+        public static async void GetRequests(StackPanel stackPanel, Button btnRefresh)
         {
             var apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/user/requests";
+            btnRefresh.IsEnabled = false;
             try
             {
                 HttpResponseMessage res = await _httpClient.GetAsync(apiUri);
@@ -60,23 +60,26 @@ namespace Berkati_Frontend.Handler
                 }
                 var _res = await res.Content.ReadAsStringAsync();
                 var json = JsonConvert.DeserializeObject<ResponseData>(_res);
-
+                
                 foreach (var item in json.Data)
                 {
                     RequestCard card = new(item);
-
                     stackPanel.Children.Add(card);
                 }
-                
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            finally
+            {
+                btnRefresh.IsEnabled = true;
+            }
         }
 
-        public static async void CreateRequest(UserData userData)
+        public static async void CreateRequest(UserData userData, Button btn)
         {
+            btn.IsEnabled = false;
             var apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/user";
             UserData u = new()
             {
@@ -89,9 +92,6 @@ namespace Berkati_Frontend.Handler
             try
             {
                 HttpResponseMessage res = await _httpClient.PostAsync(apiUri, content);
-                string data = await res.Content.ReadAsStringAsync();
-                MessageBox.Show(data);
-
                 if (!res.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Gagal menambahkan request");
@@ -102,6 +102,98 @@ namespace Berkati_Frontend.Handler
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            finally { btn.IsEnabled = true; }
+        }
+
+        public async static void DeleteRequest(ResRequests data, Button btn)
+        {
+            btn.IsEnabled = false;
+            btn.Content = "Processing...";
+            string apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/requests/" + data.RequestId;
+            try
+            {
+                HttpResponseMessage res = await _httpClient.DeleteAsync(apiUri);
+                if (!res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Gagal menghapus data");
+                    return;
+                }
+                MessageBox.Show("Berhasil menghapus data. Tekan tombol Refresh untuk perbarui data");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                btn.IsEnabled = true;
+            }
+            finally
+            {
+                btn.Content = "Delete";
+            }
+        }
+
+        public static async Task<bool> UpdateRequest(RequestsData request, Guid requestId, Button btn)
+        {
+            btn.IsEnabled = false;
+            btn.Content = "Processing...";
+            string apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/requests/" + requestId.ToString();
+            string body = JsonConvert.SerializeObject(request);
+            var content = new StringContent(body, Encoding.UTF8, "application/json");         
+            try
+            {
+                HttpResponseMessage res = await _httpClient.PutAsync(apiUri, content);
+                if (!res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Gagal mengubah data");
+                    btn.IsEnabled = true;
+                    btn.Content = "Edit";
+                    return false;
+                }
+                MessageBox.Show("Berhasil mengubah data");
+                btn.IsEnabled = true;
+                btn.Content = "Edit";
+                return true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                btn.IsEnabled = true;
+                btn.Content = "Edit";
+                return false;
+            }
+           
+        }
+        
+        public static async void FinishRequest(Guid requestId, Button btnEdit, Button btnDelete, Button btnDone, TextBlock status)
+        {
+            btnDone.IsEnabled = false;
+            string apiUri = Environment.GetEnvironmentVariable("LISTEN") + "/requests/finish/" + requestId;
+            var data = new
+            {
+                id = requestId
+            };
+            var serialized = JsonConvert.SerializeObject(data);
+            var content = new StringContent(serialized, Encoding.UTF8, "application/json");
+            try
+            {
+                HttpResponseMessage res = await _httpClient.PutAsync(apiUri, content);
+                if (!res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Kesalahan Koneksi");
+                    return;
+                }
+                status.Text = "DONE";
+                status.Foreground = new SolidColorBrush(ColorTheme.SUCCESS_2);
+                btnEdit.Visibility = Visibility.Collapsed;
+                btnDone.Visibility = Visibility.Collapsed;
+                MessageBox.Show("Layanan Selesai!");
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                btnDone.IsEnabled = true;
+                return;
             }
         }
     }
