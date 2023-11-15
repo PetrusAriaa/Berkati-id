@@ -21,15 +21,15 @@
                 <TextBlock Text="Telepon:" Margin="0,10,0,0"/>
                 <TextBox x:Name="tbTelepon" Padding="5" MaxLength="15" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
                 <TextBlock Text="Alamat:" Margin="0,10,0,0"/>
-                <TextBox x:Name="tbAlamat" Padding="5" MaxLength="10" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="tbAlamat" Padding="5" MaxLength="100" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="10" Width="300">
                 <TextBlock Text="Jumlah:"/>
-                <TextBox x:Name="tbJumlah" Padding="5" MaxLength="20" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="tbJumlah" Padding="5" MaxLength="10" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
                 <TextBlock Text="Tanggal:" Margin="0,10,0,0"/>
                 <DatePicker x:Name="dpTanggal" Padding="5" HorizontalAlignment="Stretch"/>
                 <TextBlock Text="Waktu:" Margin="0,10,0,0"/>
-                <TextBox x:Name="tbWaktu" Padding="5" MaxLength="10" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="tbWaktu" Padding="5" MaxLength="5" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch"/>
             </StackPanel>
             <StackPanel VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Margin="8, 0, 4, 0" VerticalAlignment="Center">Status :</TextBlock>
@@ -37,9 +37,9 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Width="300">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnEdit" Margin="4" Content="Edit" Background="#FFD569" Cursor="Hand" Foreground="#FF6A4D3D" BorderBrush="{x:Null}" />
-                    <Button x:Name="btnDelete" Margin="4" Content="Delete" Background="#EB3153" Cursor="Hand" BorderBrush="{x:Null}"/>
-                    <Button x:Name="btnDone" Margin="4" Content="DONE" Background="#12CE52" Cursor="Hand" BorderBrush="{x:Null}"/>
+                    <Button x:Name="btnEdit" Margin="4" Content="Edit" Background="#FFD569" Cursor="Hand" Foreground="#FF6A4D3D" BorderBrush="{x:Null}" Click="btnEdit_Click" />
+                    <Button x:Name="btnDelete" Margin="4" Content="Delete" Background="#EB3153" Cursor="Hand" BorderBrush="{x:Null}" Click="btnDelete_Click"/>
+                    <Button x:Name="btnDone" Margin="4" Content="DONE" Background="#12CE52" Cursor="Hand" BorderBrush="{x:Null}" Click="btnDone_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

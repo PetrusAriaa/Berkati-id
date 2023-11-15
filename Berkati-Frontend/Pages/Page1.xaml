@@ -13,12 +13,15 @@
             <!-- Teks "LIST REQUEST" -->
             <TextBlock Text="LIST REQUEST" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,10" />
         </StackPanel>
+        <StackPanel DockPanel.Dock="Top" Height="50" Width="100" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button HorizontalAlignment="Center" Content="Refresh" x:Name="btnRefresh" Click="btnRefresh_Click"/>
+        </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" x:Name="wrapper" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                <StackPanel  Margin="0, 0, 0, 20" Grid.Column="0" x:Name="wrapper" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
                 <!-- ItemsControl dengan tata letak card (WrapPanel) -->
                 <!--<ItemsControl x:Name="DonaturItemsControl">
                     <ItemsControl.ItemsPanel>

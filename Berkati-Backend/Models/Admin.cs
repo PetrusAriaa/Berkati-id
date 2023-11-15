@@ -1,15 +1,10 @@
-﻿using Npgsql.Internal.TypeHandlers;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Npgsql;
 using BC = BCrypt.Net.BCrypt;
-using Microsoft.AspNetCore.Identity;
-using System.Reflection.PortableExecutable;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace Berkati_Backend.Models
 {
@@ -249,21 +244,12 @@ namespace Berkati_Backend.Models
                     var tokenString = generateToken(admin);
 
                     bool valid = ValidateToken(tokenString, Environment.GetEnvironmentVariable("JWT_KEY"));
-                    Console.WriteLine(valid);
 
                     if (ValidateToken(tokenString, Environment.GetEnvironmentVariable("JWT_KEY")))
                     {
                         string nameIdentifier = GetClaim<string>("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", tokenString);
                         string name = GetClaim<string>("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", tokenString);
                         string role = GetClaim<string>("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", tokenString);
-
-                        Console.WriteLine($"NameIdentifier: {nameIdentifier}");
-                        Console.WriteLine($"Name: {name}");
-                        Console.WriteLine($"Role: {role}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid token.");
                     }
 
                     return tokenString;

@@ -12,7 +12,7 @@
         Width="800"
         Icon="/Assets/logo-kotak.png"
         WindowStartupLocation="CenterScreen">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -29,20 +29,20 @@
         </ListBox>
         <!-- Button Logout-->
         <Button x:Name="LogoutBtn"
-                Margin="0,380,0,0" 
+                Margin="10,380,10,0" 
                 Height="25" 
-                Width="25" 
-                Foreground="White"
+                Foreground="Black"
                 Background="White"
-                Cursor="Hand" Click="LogoutBtn_Click"/>
-        <StackPanel Orientation="Horizontal">
-            <!-- Icon Logout -->
-            <iconPacks:PackIconMaterial Kind="LogoutVariant"
-                                        Width="25"
-                                        Height="25"
-                                        Margin="13,380,0,0"
-                                        VerticalAlignment="Center"/>
-        </StackPanel>
+                Padding="0"
+                Cursor="Hand" Click="LogoutBtn_Click" BorderBrush="Black">
+            <StackPanel Orientation="Horizontal" Width="16">
+                <iconPacks:PackIconMaterial x:Name="loginIcon"
+                            Kind="LoginVariant"
+                            Width="16"
+                            Height="16"
+                            VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
         <!-- Elemen Frame untuk menampilkan konten dinamis -->
         <Frame Grid.Column="1" x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef"/>
     </Grid>
