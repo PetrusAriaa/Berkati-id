@@ -1,5 +1,4 @@
-﻿using Npgsql.Internal.TypeHandlers;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Npgsql;
 
 namespace Berkati_Backend.Models

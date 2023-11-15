@@ -1,7 +1,6 @@
 ﻿using Berkati_Backend.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace Berkati_Backend.Controllers
 {

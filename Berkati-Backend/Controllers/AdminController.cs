@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using System.Reflection.PortableExecutable;
-using System.Text.Json;
 
 public class LoginBody
 {
@@ -62,8 +60,6 @@ namespace Berkati_Backend.Controllers
             try
             {
                 var claims = User.Claims.Select(c => new { c.Type, c.Value });
-                Console.WriteLine(claims);
-
                 Guid Id = admins.AddAdmin(admin);
                 return Created(Id.ToString(), admin);
             }
