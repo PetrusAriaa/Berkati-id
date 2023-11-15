@@ -71,11 +71,26 @@ namespace Berkati_Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Requests _request)
+        public IActionResult Put(Guid id, [FromBody]Requests _request)
         {
             try
             {
+                _request.Id = id;
                 requests.UpdateRequest(_request);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("finish/{id}")]
+        public IActionResult Put(Guid id)
+        {
+            try
+            {
+                requests.FinishRequest(id);
                 return NoContent();
             }
             catch (Exception ex)

@@ -1,7 +1,5 @@
-﻿using Npgsql.Internal.TypeHandlers;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Npgsql;
-using Sprache;
 
 namespace Berkati_Backend.Models
 {
@@ -143,7 +141,6 @@ namespace Berkati_Backend.Models
                 {
                     throw new Exception("Database-related error occurred while creating request.", ex);
                 }
-                Console.WriteLine(ex.Message);
                 throw new Exception("Error occurred while creating request.", ex);
             }
             finally
@@ -159,7 +156,7 @@ namespace Berkati_Backend.Models
             try
             {
                 connection.Open();
-                NpgsqlCommand cmd = new("UPDATE \"requests\" SET tanggal=@tanggal, alamat=@alamat, waktu=@waktu, est_jumlah=@est_jumlah, status=@status, user_id=@user_id WHERE id = @id;", connection)
+                NpgsqlCommand cmd = new("UPDATE \"requests\" SET tanggal=@tanggal, alamat=@alamat, waktu=@waktu, est_jumlah=@est_jumlah WHERE id = @id;", connection)
                 {
                     Parameters =
                     {
@@ -169,7 +166,35 @@ namespace Berkati_Backend.Models
                         new("waktu", requests.Waktu),
                         new("est_jumlah", requests.Est_jumlah),
                         new("status", requests.Status),
-                        new("user_id", requests.UserId),
+                    }
+                };
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                if (ex is NpgsqlException)
+                {
+                    throw new Exception("Database-related error occurred.", ex);
+                }
+                throw new Exception("Error occurred while updating request.", ex);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void FinishRequest(Guid requestId)
+        {
+            try
+            {
+                connection.Open();
+                NpgsqlCommand cmd = new("UPDATE \"requests\" SET status=@status WHERE id = @id;", connection)
+                {
+                    Parameters =
+                    {
+                        new("id", requestId),
+                        new("status", "DONE")
                     }
                 };
                 cmd.ExecuteNonQuery();
