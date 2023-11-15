@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+
+<body class="p-20">
+    <header>
+        <h3 class="text-sm font-semibold text-amber-500">Installation</h3>
+    </header>
+    <h1 class="text-4xl font-bold text-slate-800 py-4">Download</h1>
+    <p>Download installer melalui tautan berikut</p>
+    <div class="flex gap-8">
+        <label class="font-bold">Berkati for Windows (x86):</label>
+        <a href="https://drive.google.com/uc?id=1Zt_GLdAjhBcmapIYyvwzM5wuxy1hlIJU&export=download" class="text-blue-700 focus:text-purple-600 focus:underline hover:underline" target="_blank">BerkatiSetup.msi (13MB)</a>
+    </div>
+    <h1 class="text-4xl font-bold text-slate-800 py-4">Prosedur Instalasi (Windows)</h1>
+    <div class="my-2">
+        <p>Jalankan <b>BerkatiSetup.msi</b> yang sudah didownload.</p>
+    </div>
+    <div class="my-2">
+        <p>Mungkin akan muncul notifikasi peringatan dari Windows untuk instalasi perangkat lunak dengan sumber '<i>Unknown</i>'
+            tergantung konfigurasi keamanan komputer anda.</p>
+            <div class="flex flex-col items-center py-10">
+                <div class="relative w-96">
+                <img src="assets/install-01.png" class="object-cover" alt="Security Warning.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Notifikasi peringatan keamanan dari Windows</label>
+        </div>
+    </div>
+    <div class="my-2">
+        <p>Jika notifikasi tersebut muncul, pilih <b>More Info</b> lalu tekan tombol <b>Run anyway</b> untuk melanjutkan proses instalasi.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="flex items-center gap-8">
+                <div class="relative w-96">
+                    <img src="assets/install-02.png" class="object-cover" alt="Security Warning.png">
+                </div>
+                <div class="relative w-96">
+                    <img src="assets/install-03.png" class="object-cover" alt="Security Warning.png">
+                </div>
+            </div>
+            <label class="italic text-slate-400">Gambar: Langkah melanjutkan instalasi</label>
+        </div>
+    </div>
+    <div class="my-2">
+        <p>Tampilan awal installer tampak seperti gambar berikut. Anda hanya perlu melanjutkan proses instalasi dengan menekan
+        tombol <b>Next ></b> dan membiarkan semua pengaturan default.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-96">
+                <img src="assets/install-04.png" class="object-cover" alt="Berkati Setup Wizard.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Berkati Setup Wizard</label>
+        </div>
+    </div>
+    <div class="my-2">
+        <p>Jika instalasi berhasil, akan muncul tampilan berikut. Anda bisa menekan tombol <b>Close</b> untuk keluar dari installer.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-96">
+                <img src="assets/install-06.png" class="object-cover" alt="Berkati Setup Wizard.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Installation Complete</label>
+        </div>
+    </div>
+    <h2 class="text-xl font-semibold text-slate-800 py-1">Perhatian</h2>
+    <div class="my-2">
+        <p>Jika perangkat anda belum terinstall .NET Desktop Runtime, notifikasi berikut akan muncul. Anda bisa menekan tombol <b>Yes</b>
+        untuk memulai instalasi .NET Desktop Runtime. Ikuti semua tahapan instalasi .NET Desktop Runtime. Jika sudah, anda dapat
+        kembali melanjutkan instalasi aplikasi Berkati.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-72">
+                <img src="assets/install-05.png" class="object-cover" alt="Berkati Setup Wizard.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Error ketika .NET Desktop Runtime tidak ditemukan</label>
+        </div>
+    </div>
+</body>
+
+</html>
