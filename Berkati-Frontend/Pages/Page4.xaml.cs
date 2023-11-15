@@ -1,16 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Berkati_Frontend.Handler;
 using Berkati_Frontend.Themes;
 
@@ -32,7 +22,7 @@ namespace Berkati_Frontend.Pages
         }
         private void AddPartnerBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (AddPartnerBtn.Content == "Add")
+            if (AddPartnerBtn.Content.ToString() == "Add")
             {
                 Partner.PartnerData partner = new()
                 {
@@ -50,7 +40,7 @@ namespace Berkati_Frontend.Pages
                 EmailTextBox.Clear();
                 AddPartnerBtn.Content = "Cancel";
             }
-            if (AddPartnerBtn.Content == "Cancel")
+            if (AddPartnerBtn.Content.ToString() == "Cancel")
             {
                 NamaTextBox.Clear();
                 PenanggungJawabTextBox.Clear();
@@ -64,6 +54,8 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
+                MessageBoxResult result = MessageBox.Show("Simpan Perubahan?", "Konfirmasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No) return;
                 Partner.PartnerData partner = (Partner.PartnerData)DataGrid.SelectedItem;
 
                 partner.Nama = NamaTextBox.Text;
@@ -89,6 +81,8 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
+                MessageBoxResult result = MessageBox.Show("Apakah Anda yakin ingin menghapus partner ini?", "Konfirmasi Penghapusan", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No) return;
                 Partner.PartnerData partner = (Partner.PartnerData)DataGrid.SelectedItem;
 
                 Partner.DeletePartner(partner, DataGrid);

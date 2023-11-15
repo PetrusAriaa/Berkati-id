@@ -1,18 +1,8 @@
 ﻿using Berkati_Frontend.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Berkati_Frontend.Handler;
 
 namespace Berkati_Frontend.Pages
@@ -46,7 +36,7 @@ namespace Berkati_Frontend.Pages
                 Requests = requestList,
             };
 
-            Requests.CreateRequest(u);
+            Requests.CreateRequest(u, AddListBtn);
 
             NamaTextBox.Clear();
             TeleponTextBox.Clear();

@@ -5,14 +5,14 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading;
 
-public class LoginResponse
-{
-    public String token { get; set; }
-}
 namespace Berkati_Frontend
 {
     public partial class LoginWindow : Window
     {
+        public class LoginResponse
+        {
+            public string? Token { get; set; }
+        }
         public LoginWindow()
         {
             InitializeComponent();
@@ -51,9 +51,9 @@ namespace Berkati_Frontend
                     string _res = await res.Content.ReadAsStringAsync();
 
                     var json = JsonConvert.DeserializeObject<LoginResponse>(_res);
-                    if (!string.IsNullOrEmpty(json.token))
+                    if (!string.IsNullOrEmpty(json.Token))
                     {
-                        Environment.SetEnvironmentVariable("TOKEN", json.token);
+                        Environment.SetEnvironmentVariable("TOKEN", json.Token);
                         MainWindow mainWindow = new();
                         mainWindow.Show();
                         Close();

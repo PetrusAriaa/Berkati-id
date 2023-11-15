@@ -1,15 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Berkati_Frontend.Handler;
 
 namespace Berkati_Frontend.Pages
@@ -26,7 +16,7 @@ namespace Berkati_Frontend.Pages
         private void AddAdminBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            if (AddAdminBtn.Content == "Add")
+            if (AddAdminBtn.Content.ToString() == "Add")
             {
                 Admin.AdminData admin = new()
                 {
@@ -35,11 +25,10 @@ namespace Berkati_Frontend.Pages
                 };
                 Admin.AddAdmin(admin, DataGrid);
 
-                // Reset TextBoxes setelah menambahkan admin
                 UsernameTextBox.Clear();
                 PasswordTextBox.Clear();
             }
-            else if (AddAdminBtn.Content == "Cancel")
+            else if (AddAdminBtn.Content.ToString() == "Cancel")
             {
                 UsernameTextBox.IsEnabled = true;
                 PasswordTextBox.IsEnabled = true;
@@ -54,13 +43,12 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
-                // Mengambil item yang dipilih dari DataGrid
+                MessageBoxResult result = MessageBox.Show("Apakah Anda yakin ingin menghapus admin ini?", "Konfirmasi Penghapusan", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No) return;
                 Admin.AdminData admin = (Admin.AdminData)DataGrid.SelectedItem;
 
-                // Menghapus item yang dipilih dari daftar
                 Admin.DeleteAdmin(admin, DataGrid);
 
-                // Reset TextBoxes setelah menghapus admin
                 UsernameTextBox.Clear();
                 PasswordTextBox.Clear();
                 UsernameTextBox.IsEnabled = true;
@@ -72,26 +60,21 @@ namespace Berkati_Frontend.Pages
         {
             if (DataGrid.SelectedItem != null)
             {
-                // Mengambil item yang dipilih dari DataGrid
                 Admin.AdminData selectedAdmin = (Admin.AdminData)DataGrid.SelectedItem;
 
-                // Menampilkan nilai item yang dipilih di dalam inputan
                 UsernameTextBox.Text = selectedAdmin.Username;
                 PasswordTextBox.Text = "****";
                 UsernameTextBox.IsEnabled = false;
                 PasswordTextBox.IsEnabled = false;
-                // Mengatur DataGrid ke mode baca saja
+
                 DataGrid.IsReadOnly = true;
                 AddAdminBtn.Content = "Cancel";
             }
             else
             {
-                // Mengatur DataGrid ke mode aktif
                 DataGrid.IsReadOnly = false;
                 AddAdminBtn.Content = "Add";
             }
         }
-
-        // Kelas untuk data pengguna
-    }
+     }
 }
