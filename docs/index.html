@@ -9,28 +9,34 @@
     <script src="script.js"></script>
 </head>
 
-<body class="flex flex-row h-full w-full">
-    <div id="sidebar" class="bg-slate-50 flex flex-col w-1/5 h-full fixed text-lg px-8 py-12">
-        <a href="/docs" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Home</a>
-        <a href="#about" onclick="showPage('about.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">About</a>
-        <a href="#instalasi" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Installation</a>
-        <p class="px-3 py-1 font-semibold text-xl mt-4">Usage</p>
-        <a href="#api-demo" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">API Demo</a>
-        <a href="#login" onclick="showPage('login.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Login</a>
-        <a href="#access-request" onclick="showPage('request/access.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Access requests</a>
-        <a href="#add-request" onclick="showPage('request/add.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Add new request</a>
-        <a href="#edit-request" onclick="showPage('request/edit.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Edit active requests</a>
-        <a href="#delete-request" onclick="showPage('request/delete.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Delete requests</a>
-        <a href="#finish-request" onclick="showPage('request/done.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Mark request as done</a>
-        <a href="#add-admin" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Add new admin</a>
-        <a href="#delete-admin" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Delete admin</a>
-        <a href="#add-partner" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Add new partner</a>
-        <a href="#edit-partner" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Edit partner information</a>
-        <a href="#delete-partner" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Delete partner</a>
+<body>
+    <div class="flex flex-col md:hidden items-center h-screen justify-center gap-8 px-10">
+        <img src="assets/logo-full.png" class="w-44"/>
+        <h1 class="text-center text-2xl">Maaf. Harap gunakan layar lebih lebar untuk mengakses laman ini.</h1>
     </div>
-
-    <div id="content" class="grow flex justify-end">
-        <iframe id="content-iframe" src="home.html" class="w-4/5 min-h-screen"/>
+    <div class="flex flex-row h-full w-full hidden md:flex">
+        <div id="sidebar" class="bg-slate-50 flex flex-col w-1/5 h-full fixed text-lg px-8 py-12">
+            <a href="/docs" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Home</a>
+            <a href="#about" onclick="showPage('about.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">About</a>
+            <a href="#instalasi" onclick="showPage('installation.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Installation</a>
+            <p class="px-3 py-1 font-semibold text-xl mt-4">Usage</p>
+            <a href="#api-demo" onclick="showPage('api.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">API Demo</a>
+            <a href="#login" onclick="showPage('login.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Login</a>
+            <a href="#access-request" onclick="showPage('request/access.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Access requests</a>
+            <a href="#add-request" onclick="showPage('request/add.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Add new request</a>
+            <a href="#edit-request" onclick="showPage('request/edit.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Edit active requests</a>
+            <a href="#delete-request" onclick="showPage('request/delete.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Delete requests</a>
+            <a href="#finish-request" onclick="showPage('request/done.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Mark request as done</a>
+            <a href="#add-admin" onclick="showPage('admin/add.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Add new admin</a>
+            <a href="#delete-admin" onclick="showPage('admin/delete.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Delete admin</a>
+            <a href="#add-partner" onclick="showPage('partner/add.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Add new partner</a>
+            <a href="#edit-partner" onclick="showPage('partner/edit.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Edit partner information</a>
+            <a href="#delete-partner" onclick="showPage('partner/delete.html')" class="px-3 py-1 border-l-2 hover:border-amber-500 hover:text-amber-500 transition-color duration-200">Delete partner</a>
+        </div>
+    
+        <div id="content" class="grow flex justify-end">
+            <iframe id="content-iframe" src="home.html" class="w-4/5 min-h-screen"/>
+        </div>
     </div>
 
 </body>
