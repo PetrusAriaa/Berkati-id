@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+
+<body class="p-20">
+    <header>
+        <h3 class="text-sm font-semibold text-amber-500">Admin</h3>
+    </header>
+    <h1 class="text-4xl font-bold text-slate-800 py-4">Menambahkan admin baru</h1>
+    <div class="my-2">
+        <p>Pada side navigation bar pilih icon (<span><img
+                    src="../assets/admin-icon.png" class="inline w-8" alt="admin-icon.png" /></span>) untuk
+            mengarahkan ke halaman Manage Admin. Perlu diketahui bahwa hanya admin dengan role <b>SuperUser</b> yang memiliki akses 
+            untuk menambah atau menghapus admin. Admin lainnya hanya memiliki akses untuk melihat list admin yang ada. Pada Datagrid 
+            ditampilkan username dan password yang sudah terenkripsi.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-[35rem]">
+                <img src="../assets/admin.png" class="object-cover" alt="admin.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Halaman Manage Admin</label>
+        </div>
+    </div>
+    <div class="my-2">
+        <p>Isikan Username dan password dari admin baru. Kemudian tekan tombol <b>Add</b> untuk mengkonfirmasi
+            penambahan permintaan layanan baru. Tunggu hingga proses selesai.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-[35rem]">
+                <img src="../assets/admin-add-01.png" class="object-cover" alt="admin-add-01.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Mengisi username dan password admin baru</label>
+        </div>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-[35rem]">
+                <img src="../assets/admin-add-02.png" class="object-cover" alt="admin-add-02.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Admin berhasil ditambahkan</label>
+        </div>
+    </div>
+    <div class="my-2">
+        <p>Setelah proses selesai dilakukan, DataGrid kembali melakukan fetch untuk memperbarui data admin</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-[35rem]">
+                <img src="../assets/admin-add-03.png" class="object-cover" alt="admin-add-03.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Data admin terbaru</label>
+        </div>
+    </div>
+</body>
+
+</html>

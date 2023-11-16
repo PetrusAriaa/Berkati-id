@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+
+<body class="p-20">
+    <header>
+        <h3 class="text-sm font-semibold text-amber-500">Admin</h3>
+    </header>
+    <h1 class="text-4xl font-bold text-slate-800 py-4">Menghapus admin dari daftar</h1>
+    <div class="my-2">
+        <p>Perlu diketahui bahwa hanya admin dengan role <b>SuperUser</b> yang memiliki akses
+        untuk menambah atau menghapus admin. Admin lainnya hanya memiliki akses untuk melihat list admin yang ada. Pada Datagrid
+        ditampilkan username dan password yang sudah terenkripsi.</p>
+        <p class="my-2">Pilih salah satu admin pada DataGrid yang akan dihapus. Username dan password akan
+            tertampil pada input field. Password juga akan diberikan mask.
+        </p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-[35rem]">
+                <img src="../assets/admin-delete-01.png" class="object-cover" alt="admin-delete-01.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Memilih admin dari datagrid</label>
+        </div>
+    </div>
+    <div class="my-2">
+        <p>Anda dapat menekan tombol <b>Cancel</b> untuk membatalkan operasi. Tekan tombol <b>Delete</b> untuk menghapus admin. Tunggu hingga proses selesai.</p>
+        <div class="flex flex-col items-center py-10">
+            <div class="relative w-[35rem]">
+                <img src="../assets/admin-delete-02.png" class="object-cover" alt="admin-delete-02.png">
+            </div>
+            <label class="italic text-slate-400 max-w-sm text-center">Gambar: Konfirmasi menghapus admin</label>
+        </div>
+    </div>
+</body>
+
+</html>
