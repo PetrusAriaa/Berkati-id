@@ -24,7 +24,7 @@ namespace Berkati_Frontend
             }
             else
             {
-                Environment.SetEnvironmentVariable("LISTEN", "http://18.139.1.64");
+                Environment.SetEnvironmentVariable("LISTEN", "http://18.143.231.236");
             }
         }
 
